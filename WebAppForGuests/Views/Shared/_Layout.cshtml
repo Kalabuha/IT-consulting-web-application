@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profi @ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/normalize.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/RetroWaveProfi.styles.css" asp-append-version="true" />
+    <script type="text/javascript" src="~/js/site.js" asp-append-version="true"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="userbar">
+            <div class="left-userbar">
+                <p class="white-text music-player">Retrowave</p>
+            </div>
+
+            <div class="rigth-userbar">
+                <p class="white-text user-name">Synthwave</p>
+            </div>
+        </div>
+
+        <nav class="navbar">
+            <div class="navbar-main">
+                <ul class="navbar-list">
+                    <li class="nav-item">
+                        <a class="white-text nav-link" asp-area="" asp-controller="Home" asp-action="SubmitApplication">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="white-text nav-link" asp-area="" asp-controller="Services" asp-action="Index">Услуги</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="white-text nav-link" asp-area="" asp-controller="Projects" asp-action="Index">Проекты</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="white-text nav-link" asp-area="" asp-controller="Blogs" asp-action="Index">Блог</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="white-text nav-link" asp-area="" asp-controller="Contacts" asp-action="Index">Контакты</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main role="main" class="container">
+        @RenderBody()
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-content-data">
+                <div class="footer-content-data-img">
+                    <img class="footer-delorean-img" src="/img/logos/delorean.jpg" alt="DMC DeLorean"/>
+                </div>
+
+                <div class="footer-content-data-different">
+                    <a class="footer-text footer-link" href="#">Brand and mission RW Profi</a>
+                    <a class="footer-text footer-link" href="#">FAQ</a>
+                    <a class="footer-text footer-link" href="#">RW Profi disclaimer</a>
+                    <a class="footer-text footer-link" href="#">Legal claims</a>
+                    <a class="footer-text footer-link" href="#">Terms of use</a>
+                    <a class="footer-text footer-link" href="#">Advertising</a>
+                    <a class="footer-text footer-link" href="#">Why new RW is important</a>
+                </div>
+
+                <div class="footer-content-data-links">
+                    <a class="footer-text footer-link footer-link-twitter" href="https://twitter.com/" target="_blank">Twitter</a>
+                    <a class="footer-text footer-link footer-link-tumblr" href="https://www.tumblr.com/" target="_blank">Tumblr</a>
+                    <a class="footer-text footer-link footer-link-instagram" href="https://www.instagram.com/" target="_blank">Instagram</a>
+                    <a class="footer-text footer-link footer-link-facebook" href="#" target="_blank">Facebook</a>
+                    <a class="footer-text footer-link footer-link-soundcloud" href="https://soundcloud.com/" target="_blank">Soundcloud</a>
+                    <a class="footer-text footer-link footer-link-youtube" href="https://www.youtube.com/" target="_blank">Youtube</a>
+                </div>
+            </div>
+
+            <div class="footer-content-bottom">
+                <span class="footer-text all-rights-reserved">©2022 ProfiRetroWave, LLC. All Rights Reserved</span>
+            </div>
+        </div>
+    </footer>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

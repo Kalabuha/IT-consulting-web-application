@@ -1,0 +1,15 @@
+.navbar{}
+
+.navbar-container{}
+
+.navbar-list{}
+
+.navbar-item{}
+
+.navbar-link{}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
