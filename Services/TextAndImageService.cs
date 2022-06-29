@@ -77,7 +77,7 @@ namespace Services
 
         public string GetDefaultHomePageImage()
         {
-            string defaultHomePageImage = @"..\img\design\default-image\it-consulting-default-1.jpg";
+            string defaultHomePageImage = @"..\img\default-images\it-consulting-default-1.jpg";
 
             return defaultHomePageImage;
         }

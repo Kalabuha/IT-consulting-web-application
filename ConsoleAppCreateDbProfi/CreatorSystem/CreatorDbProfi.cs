@@ -10,27 +10,32 @@ namespace ConsoleAppCreateDbProfi.CreatorSystem
     {
         private readonly DbContextProfiСonnector _context;
 
+        private readonly string _directory;
+
         public CreatorDbProfi(DbContextProfiСonnector context)
         {
             _context = context;
+            _directory = @"..\..\..\TestData\";
         }
 
         public void CreateDbProfi()
         {
             _context.Database.Migrate();
 
-            FillProjectsTable(@"..\..\..\TestData\projects.json");
-            FillServicesTable(@"..\..\..\TestData\services.json");
-            FillBlogsTable(@"..\..\..\TestData\blogs.json");
-            FillTextsTable(@"..\..\..\TestData\texts.json");
-            FillImagesTable(@"..\..\..\TestData\images.json");
-            FillContactsTable(@"..\..\..\TestData\contacts.json");
+            FillProjectsTable(@"projects.json");
+            FillServicesTable(@"services.json");
+            FillBlogsTable(@"blogs.json");
+            FillTextsTable(@"texts.json");
+            FillImagesTable(@"images.json");
+            FillContactsTable(@"contacts.json");
 
             _context.SaveChanges();
         }
 
-        private void FillProjectsTable(string projectsJsonPath)
+        private void FillProjectsTable(string projectsJsonFileName)
         {
+            var projectsJsonPath = Path.Combine(_directory, projectsJsonFileName);
+
             if (!File.Exists(projectsJsonPath))
             {
                 return;
@@ -57,8 +62,10 @@ namespace ConsoleAppCreateDbProfi.CreatorSystem
             }
         }
 
-        private void FillServicesTable(string servicesJsonPath)
+        private void FillServicesTable(string servicesJsonFileName)
         {
+            var servicesJsonPath = Path.Combine(_directory, servicesJsonFileName);
+
             if (!File.Exists(servicesJsonPath))
             {
                 return;
@@ -83,8 +90,10 @@ namespace ConsoleAppCreateDbProfi.CreatorSystem
             }
         }
 
-        private void FillBlogsTable(string blogsJsonPath)
+        private void FillBlogsTable(string blogsJsonFileName)
         {
+            var blogsJsonPath = Path.Combine(_directory, blogsJsonFileName);
+
             if (!File.Exists(blogsJsonPath))
             {
                 return;
@@ -112,8 +121,10 @@ namespace ConsoleAppCreateDbProfi.CreatorSystem
             }
         }
 
-        private void FillTextsTable(string textsJsonPath)
+        private void FillTextsTable(string textsJsonFileName)
         {
+            var textsJsonPath = Path.Combine(_directory, textsJsonFileName);
+
             if (!File.Exists(textsJsonPath))
             {
                 return;
@@ -137,8 +148,10 @@ namespace ConsoleAppCreateDbProfi.CreatorSystem
             }
         }
 
-        private void FillImagesTable(string imageJsonPath)
+        private void FillImagesTable(string imageJsonFileName)
         {
+            var imageJsonPath = Path.Combine(_directory, imageJsonFileName);
+
             if (!File.Exists(imageJsonPath))
             {
                 return;
@@ -162,8 +175,10 @@ namespace ConsoleAppCreateDbProfi.CreatorSystem
             }
         }
 
-        private void FillContactsTable(string contactsJsonPath)
+        private void FillContactsTable(string contactsJsonFileName)
         {
+            var contactsJsonPath = Path.Combine(_directory, contactsJsonFileName);
+
             if (!File.Exists(contactsJsonPath))
             {
                 return;
