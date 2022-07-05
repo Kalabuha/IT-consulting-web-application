@@ -4,21 +4,16 @@ using WebAppForAdmins.Models;
 
 namespace WebAppForAdmins.Controllers
 {
-    public class HomeController : Controller
+    public class MainController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<MainController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public MainController(ILogger<MainController> logger)
         {
             _logger = logger;
         }
 
         public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
         {
             return View();
         }

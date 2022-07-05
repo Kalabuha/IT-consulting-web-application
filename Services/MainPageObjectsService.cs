@@ -6,12 +6,12 @@ using System.Text;
 
 namespace Services
 {
-    internal class TextAndImageService : ITextAndImageService
+    internal class MainPageObjectsService : ITextAndImageService
     {
         private readonly ITextRepository _textRepository;
         private readonly IImageRepository _imageRepository;
 
-        public TextAndImageService(ITextRepository textRepository, IImageRepository imageRepository)
+        public MainPageObjectsService(ITextRepository textRepository, IImageRepository imageRepository)
         {
             _textRepository = textRepository;
             _imageRepository = imageRepository;

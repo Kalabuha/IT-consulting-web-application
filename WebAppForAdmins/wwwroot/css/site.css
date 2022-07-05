@@ -1,15 +1,245 @@
-.navbar{}
+/* COMMON */
+.container {
+    position: relative;
+    margin: 0 auto;
+    width: 1170px;
+    height: 750px;
+}
 
-.navbar-container{}
+/* Texts */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@600&family=Mulish:ital,wght@0,400;0,600;1,400&display=swap');
 
-.navbar-list{}
+.font-family-1 {
+    font-family: 'Fira Sans', 'Helvetica', 'sans-serif';
+}
 
-.navbar-item{}
+.font-family-2 {
+    font-family: 'Mulish', 'Helvetica', 'sans-serif';
+}
 
-.navbar-link{}
+.black-text {
+    color: black;
+}
 
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
+.white-text {
+    color: white;
+}
+
+.gold-text {
+    color: gold;
+}
+
+.h1-standart-page {
+    font-size: 32px;
+    margin: 0;
+    text-align: center;
+    letter-spacing: 0.2em;
+}
+
+.text {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.middle-text {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.large-text {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.biggest-text {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 600;
+}
+
+/* Header */
+.profi {
+    margin: 0 0 33px 20px;
+    font-size: 38px;
+    font-weight: 600;
+}
+
+.header {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    box-sizing: border-box;
+    height: 100%;
+    width: 13%;
+    left: 0;
+    padding-top: 18px;
+    background-color: rgba(223, 188, 47, 0.92);
+}
+
+.navbar-list {
+    padding: 0;
+    text-transform: uppercase;
+}
+
+.navbar-item {
+    margin: 0;
+    padding: 15px 0 15px 20px;
+}
+
+.navbar-item:hover {
+    padding-left: 30px;
+    background-color: gold;
+}
+
+.navbar-item:last-child {
+    margin-bottom: 0;
+}
+
+.navbar-link {
+    font-weight: 600;
+    font-size: 20px;
+    color: black;
+}
+
+/* Main */
+.userbar {
+    width: 100%;
+    height: 87px;
+    background-color: black;
+    margin: 0 0 20px 0;
+}
+
+.userbar-block-logo, .userbar-block-username {
+    display: inline-block;
+    height: 100%;
+}
+
+.userbar-block-logo {
+    position: relative;
+    width: 50%;
+}
+
+.userbar-block-username {
+    position: relative;
+    text-align: right;
+    width: 50%;
+    vertical-align: top;
+}
+
+.userbar-text {
+    position: relative;
+    display: inline-block;
+    position: relative;
+    top: 48%;
+    right: 10%;
+    transform: translate(0, -50%);
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.ldr-logo {
+    position: relative;
+    top: 50%;
+    left: 10%;
+    transform: translate(0, -50%);
+    height: 96%;
+}
+
+.main {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    height: 100%;
+    width: 80%;
+    right: 0;
+    background-color: rgba(40, 40, 40, 0.92);
+}
+
+.container-content {
+    box-sizing: border-box;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+/* CONTENT */
+/* Common */
+.content-block {
+    margin: 0 0 20px 0;
+    width: 100%;
+}
+
+.content-color-block {
+    background-color: rgba(238, 238, 238, 0.6);
+}
+
+.button {
+    height: 40px;
+    width: 100%;
+    cursor: pointer;
+}
+
+/* .wide-button */
+
+/* Applications */
+.select-block {
+    box-sizing: border-box;
+    padding-top: 10px;
+    padding-left: 8px;
+    padding-bottom: 5px;
+    min-height: 158px;
+}
+
+.select-collapsable .select-block {
+    display: none;
+}
+
+.select-collapsable.expanded .select-block {
+    display: block;
+}
+
+.request-filter-block {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 10px;
+    justify-content: space-between
+}
+
+.filter-button-text-left {
+    text-align: left;
+}
+
+.filter-wide-item {
+    flex-basis: 370px;
+    flex-grow: 4;
+}
+
+.filter-narrow-item {
+    flex-grow: 1;
+}
+
+.application-status-item {
+    margin: 0 0 5px 0;
+}
+
+.application-status-item:last-child {
+    margin-bottom: 0;
+}
+
+.select-point {
+    margin: 0 10px 0 0;
+}
+
+.select-label {
+    font-family: 'Mulish', 'Helvetica', 'sans-serif';
+    font-size: 16px;
+    font-weight: 400;
+    margin-right: 10px;
+}
+
+.select-input-field:not(:last-child) {
+    margin-right: 20px;
 }

@@ -17,7 +17,10 @@
         <div class="main-content-common">
             <div class="main-content-block main-content-dialog-message">
                 <p class="paragraph-large-text">Заявка отправлена</p>
-
+                @if (ViewBag.ApplicationNumber != null)
+                {
+                    <p class="paragraph-large-text">номер вашей заявки: @ViewBag.ApplicationNumber </p>
+                }
                 <a class="button-link paragraph-large-text white-text" asp-area="" asp-controller="Home" asp-action="SubmitApplication">
                     Вернуться назад
                 </a>

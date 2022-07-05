@@ -16,7 +16,5 @@ namespace DbContextProfi
         #endregion
 
         public DbContextProfiСonnector(DbContextOptions<DbContextProfiСonnector> options) : base(options) { }
-
-
     }
 }

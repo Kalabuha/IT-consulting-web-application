@@ -1,0 +1,52 @@
+﻿@{
+    ViewData["Title"] = "Applications";
+}
+
+<div class="container-content-common">
+    <div class="content-block">
+        <h1 class="font-family-1 h1-standart-page gold-text">Заявки</h1>
+    </div>
+
+    <div class="content-block">
+        <div class="filter">
+            <partial name="_FilterForm" />
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+<script>
+    $(function() {
+        $("#RequestFilterForm").ajaxForm({
+            success: function(response) {
+                $("#RequestFilterResult").html(response);
+            }
+        });
+
+        $(".select-collapsable").on("click", ".select-button-statuses", function(e) {
+            var collapsable = $(this).closest(".select-collapsable");
+            if(collapsable.hasClass("expanded"))
+            {
+                collapsable.removeClass("expanded");
+            }
+            else
+            {
+                collapsable.addClass("expanded");
+            }
+        });
+
+        $(".select-collapsable").on("click", ".select-button-periods", function(e) {
+            var collapsable = $(this).closest(".select-collapsable");
+            if(collapsable.hasClass("expanded"))
+            {
+                collapsable.removeClass("expanded");
+            }
+            else
+            {
+                collapsable.addClass("expanded");
+            }
+        });
+    });
+</script>
+}

@@ -51,10 +51,12 @@ namespace DbContextProfi.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Application_number = table.Column<int>(type: "int", nullable: false),
                     Guest_name = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
                     Guest_email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Is_application_processed = table.Column<bool>(type: "bit", nullable: false),
-                    Guests_application_text = table.Column<string>(type: "nvarchar(4000)", maxLength: 4000, nullable: false)
+                    Guests_application_text = table.Column<string>(type: "nvarchar(4000)", maxLength: 4000, nullable: false),
+                    Date_receipt_application = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Application_processing_status = table.Column<byte>(type: "tinyint", nullable: false)
                 },
                 constraints: table =>
                 {

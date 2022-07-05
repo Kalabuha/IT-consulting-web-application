@@ -11,7 +11,7 @@ namespace Services.Extensions
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<IServiceService, ServiceService>();
             services.AddScoped<IBlogService, BlogService>();
-            services.AddScoped<ITextAndImageService, TextAndImageService>();
+            services.AddScoped<ITextAndImageService, MainPageObjectsService>();
             services.AddScoped<IApplicationService, ApplicationService>();
             services.AddScoped<IContactService, ContactService>();
 

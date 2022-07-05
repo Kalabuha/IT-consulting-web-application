@@ -11,10 +11,11 @@ namespace Services.Converters
             return new ApplicationModel
             {
                 Id = entity.Id,
+                Number = entity.Number,
                 GuestName = entity.GuestName,
                 GuestEmail = entity.GuestEmail,
                 GuestApplicationText = entity.GuestsApplicationText ?? "Текст сообщения отсутствует",
-                DateReceiptApplication = entity.DateReceiptApplication,
+                DateReceiptApplication = entity.DateReceipt,
                 Status = entity.Status
             };
         }
@@ -34,10 +35,11 @@ namespace Services.Converters
             return new ApplicationEntity
             {
                 Id = model.Id,
+                Number = model.Number,
                 GuestName = model.GuestName ?? string.Empty,
                 GuestEmail = model.GuestEmail ?? string.Empty,
                 GuestsApplicationText = model.GuestApplicationText ?? string.Empty,
-                DateReceiptApplication = model.DateReceiptApplication,
+                DateReceipt = model.DateReceiptApplication,
                 Status = status
             };
         }

@@ -30,7 +30,7 @@ namespace DbContextProfi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("DateReceiptApplication")
+                    b.Property<DateTime>("DateReceipt")
                         .HasColumnType("datetime2")
                         .HasColumnName("Date_receipt_application");
 
@@ -51,6 +51,10 @@ namespace DbContextProfi.Migrations
                         .HasMaxLength(4000)
                         .HasColumnType("nvarchar(4000)")
                         .HasColumnName("Guests_application_text");
+
+                    b.Property<int>("Number")
+                        .HasColumnType("int")
+                        .HasColumnName("Application_number");
 
                     b.Property<byte>("Status")
                         .HasColumnType("tinyint")

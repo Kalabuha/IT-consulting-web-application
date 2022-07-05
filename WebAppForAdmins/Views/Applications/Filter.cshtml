@@ -1,0 +1,42 @@
+﻿@model ApplicationsViewModel
+
+@if (Model != null && Model.Applications != null && Model.Applications.Count > 0)
+{
+    <div class="content-block">
+        <p class="biggest-text font-family-2 white-text">Всего найдено заявок: @Model.Applications.Count</p>
+    </div>
+
+    <div class="content-block">
+        <table class="line-table">
+            <thead class="line-table-thead">
+                <tr class="line-table-head-row">
+                    <th class="line-table-head-cell"><p class="middle-text font-family-2 white-text">Статус</p></th>
+                    <th class="line-table-head-cell"><p class="middle-text font-family-2 white-text">Номер</p></th>
+                    <th class="line-table-head-cell"><p class="middle-text font-family-2 white-text">Время обращения</p></th>
+                    <th class="line-table-head-cell"><p class="middle-text font-family-2 white-text">Имя</p></th>
+                    <th class="line-table-head-cell"><p class="middle-text font-family-2 white-text">>e-mail</p></th>
+                    <th class="line-table-head-cell"><p class="middle-text font-family-2 white-text">Текст</p></th>
+                </tr>
+            </thead>
+            <tbody class="line-table-body">
+                @foreach (var application in Model.Applications)
+                {
+                    <tr class="line-table-body-row">
+                        <td class="line-table-body-cell"><p class="middle-text font-family-2 black-text">@application.Number</p></td>
+                        <td class="line-table-body-cell"><p class="middle-text font-family-2 black-text">@application.DateReceiptApplication.ToString("dd.MM.yyyy hh.mm")</p></td>
+                        <td class="line-table-body-cell"><p class="middle-text font-family-2 black-text">@application.GuestName</p></td>
+                        <td class="line-table-body-cell"><p class="middle-text font-family-2 black-text">@application.GuestEmail</p></td>
+                        <td class="line-table-body-cell"><p class="middle-text font-family-2 black-text">@application.GuestApplicationText</p></td>
+                        <td class="line-table-body-cell"><p class="middle-text font-family-2 black-text">@application.Status</p></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="content-block">
+        <p class="large-text font-family-2 white-text">Заявки не были найдены. Попробуте изменить условия поиска.</p>
+    </div>
+}

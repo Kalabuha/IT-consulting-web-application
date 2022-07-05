@@ -55,7 +55,7 @@ namespace WebAppForGuests.Controllers
 
             return View(new ApplicationModel
             {
-                Status = ApplicationStatus.Initial
+                Status = ApplicationStatus.Initial,
             });
         }
 
@@ -70,20 +70,23 @@ namespace WebAppForGuests.Controllers
             TrimApplicationModelData(application);
 
             var applicationValidationResult = _dataValidationService.GetApplicationValidationResult(application);
-            if (applicationValidationResult.NameValidError == null &&
-                applicationValidationResult.EmailValidError == null &&
-                applicationValidationResult.MessageValidError == null)
+            if (applicationValidationResult.NameValidError != null ||
+                applicationValidationResult.EmailValidError != null ||
+                applicationValidationResult.MessageValidError != null)
             {
-                await _applicationService.AddApplicationToDb(application);
-                return RedirectToAction(nameof(MessageApplicationSent));
+                return RedirectToAction(nameof(SubmitApplication), applicationValidationResult);
             }
 
-            return RedirectToAction(nameof(SubmitApplication), applicationValidationResult);
+            application.Number = await _applicationService.GetFreeApplicationNumber();
+            await _applicationService.AddApplicationToDb(application);
+
+            return RedirectToAction(nameof(MessageApplicationSent), new { applicationNumber = application.Number });
         }
 
         [HttpGet]
-        public ActionResult<string> MessageApplicationSent()
+        public ActionResult<string> MessageApplicationSent(int applicationNumber)
         {
+            ViewBag.ApplicationNumber = applicationNumber;
             return View();
         }
 

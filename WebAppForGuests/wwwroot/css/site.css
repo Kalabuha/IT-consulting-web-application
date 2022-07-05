@@ -50,7 +50,7 @@
   padding: 20px 35px;
   margin: 0;
   background-color: #4e00a0;
-  border-radius: 20px;
+  border-radius: 5px;
   z-index: 4;
   cursor: pointer;
 }
@@ -142,7 +142,7 @@
 }
 
 .nav-link:hover {
-  border-radius: 10px;
+  border-radius: 5px;
   background-color: #4e00a0;
 }
 
@@ -268,18 +268,29 @@
   position: absolute;
   width: 100%;
   top: 25%;
+  z-index: 3;
+}
+
+.main-content-start-center-elements-block-logo {
+  margin: 0 0 30px 0;
+}
+
+.main-content-start-center-elements-block-greetings {
   text-align: center;
-  z-index: 6;
+  margin: 0 0 0 0;
 }
 
 .link-retrowave-logo-retrowave-radio {
+  position: relative;
   display: inline-block;
-  margin: 0 0 30px 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 18%;
 }
 
 .retro-wave-logo {
   margin: 0;
-  width: 25%;
+  width: 100%;
 }
 
 .start-text {
@@ -299,7 +310,7 @@
   margin: 8px 0 0 3%;
   height: 105px;
   position: absolute;
-  z-index: 7;
+  z-index: 3;
 }
 
 .header-block {
@@ -318,7 +329,7 @@
 .main-content-block {
   box-sizing: border-box;
   margin: 0 0 20px 0;
-  border-radius: 10px;
+  border-radius: 5px;
   width: 100%;
 }
 
@@ -584,7 +595,11 @@
   width: 25%;
 }
 
-.project-details-logo-img {
+.link-project-logo {
+  width: 100%;
+}
+
+.img-project-logo {
   margin: 0 auto;
   display: block;
   max-width: 90%;

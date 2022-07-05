@@ -1,0 +1,63 @@
+﻿@model ApplicationsFilterViewModel
+
+<form id="RequestFilterForm" class="form-filter" asp-action="Filter" asp-controller="Applications" method="POST">
+    <div class="request-filter-block">
+        <div class="filter-wide-item">
+            <div class="select-collapsable">
+                <button class="button filter-button-text-left select-button-statuses" type="button">
+                    <span class="large-text font-family-2 black-text">&#129095; Статусы заявок</span>
+                </button>
+
+                <div class="select-block content-color-block">
+                    @foreach (var status in Enum.GetValues<ApplicationStatus>())
+                    {
+                        var currentId = $"RequestedStatuses_{status.ToString()}";
+                        var name = @Html.NameFor(p => p.RequestedStatuses);
+                        <div class="application-status-item">
+                            <input class="select-point" type="checkbox" name="@name" id="@currentId" value="@status"/>
+                            <label class="select-label" for="@currentId">@status.TranslateApplicationStatusToDisplayString()</label>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-wide-item">
+            <div class="select-collapsable">
+                <button class="button filter-button-text-left select-button-periods" type="button">
+                    <span class="large-text font-family-2 black-text">&#129095; Указать период</span>
+                </button>
+
+                <div class="select-block content-color-block">
+                    @foreach (var period in Enum.GetValues<DateTimePeriod>())
+                    {
+                        var currentId = $"RequestedPeriods_{period.ToString()}";
+                        var name = @Html.NameFor(p => p.RequestedPeriod);
+                        var nameStartPeriod = @Html.NameFor(p => p.StartTimePeriod);
+                        var nameEndPeriod = @Html.NameFor(p => p.EndTimePeriod);
+                        <div class="application-status-item">
+                            <input class="select-point" type="radio" name="@name" id="@currentId" value="@period"/>
+                            @if (period != DateTimePeriod.SelectedPeriodDateTime)
+                            {
+                                <label class="select-label" for="@currentId">@period.TranslateDateTimePeriodToDisplayString()</label>
+                            }
+                            else
+                            {
+                                <label class="select-label" for="@nameStartPeriod">От:</label>
+                                <input class="select-input-field" type="date" name="@nameStartPeriod" id="StartDateTiem" />
+                                <label class="select-label" for="@nameEndPeriod">До:</label>
+                                <input class="select-input-field" type="date" name="@nameEndPeriod" id="EndDateTiem" />
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-narrow-item">
+            <button class="button filter-narrow-button" type="submit">
+                <span class="large-text font-family-2 black-text">Принять</span>
+            </button>
+        </div>
+    </div>
+</form>

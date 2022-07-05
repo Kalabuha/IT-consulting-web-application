@@ -8,6 +8,9 @@ namespace Resources.Entities
     [Table("Guests_applications")]
     public class ApplicationEntity : BaseEntity
     {
+        [Column("Application_number"), Required]
+        public int Number { get; set; }
+
         [Column("Guest_name"), Required, MaxLength(60)]
         public string GuestName { get; set; } = default!;
 
@@ -18,7 +21,7 @@ namespace Resources.Entities
         public string GuestsApplicationText { get; set; } = default!;
 
         [Column("Date_receipt_application"), Required]
-        public DateTime DateReceiptApplication { get; set; }
+        public DateTime DateReceipt { get; set; }
 
         [Column("Application_processing_status"), Required]
         public ApplicationStatus Status { get; set; }

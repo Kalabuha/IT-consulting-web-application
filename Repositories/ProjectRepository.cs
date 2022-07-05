@@ -8,7 +8,7 @@ namespace Repositories
 {
     internal class ProjectRepository : BaseRepository<ProjectEntity>, IProjectRepository
     {
-        public ProjectRepository(DbContextProfiСonnector context) : base(context) { }
+        public ProjectRepository(DbContextProfiСonnector context) : base(context) {}
 
         public async Task<ProjectEntity[]> GetAllProjectEntitiesAsync()
         {
