@@ -8,11 +8,13 @@ namespace Services.Extensions
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
             services.AddScoped<IDataValidationService, DataValidationService>();
+            services.AddScoped<IHeaderService, HeaderService>();
+            services.AddScoped<IMainPageService, MainPageService>();
+
+            services.AddScoped<IApplicationService, ApplicationService>();
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<IServiceService, ServiceService>();
             services.AddScoped<IBlogService, BlogService>();
-            services.AddScoped<ITextAndImageService, MainPageObjectsService>();
-            services.AddScoped<IApplicationService, ApplicationService>();
             services.AddScoped<IContactService, ContactService>();
 
             return services;

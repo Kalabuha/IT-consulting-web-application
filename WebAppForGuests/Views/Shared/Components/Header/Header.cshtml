@@ -1,0 +1,37 @@
+﻿@model HeaderModel
+
+<div class="userbar">
+    <div class="left-userbar">
+        <p class="white-text music-player">Retrowave</p>
+    </div>
+
+    <div class="rigth-userbar">
+        <p class="white-text user-name">Synthwave</p>
+    </div>
+</div>
+
+<nav class="navbar">
+    <div class="navbar-main">
+        <ul class="navbar-list">
+            <li class="nav-item">
+                <a class="white-text nav-link" asp-area="" asp-controller="Main" asp-action="Index">@Model.Main</a>
+            </li>
+            <li class="nav-item">
+                <a class="white-text nav-link" asp-area="" asp-controller="Services" asp-action="Index">@Model.Services</a>
+            </li>
+            <li class="nav-item">
+                <a class="white-text nav-link" asp-area="" asp-controller="Projects" asp-action="Index">@Model.Projects</a>
+            </li>
+            <li class="nav-item">
+                <a class="white-text nav-link" asp-area="" asp-controller="Blogs" asp-action="Index">@Model.Blogs</a>
+            </li>
+            <li class="nav-item">
+                <a class="white-text nav-link" asp-area="" asp-controller="Contacts" asp-action="Index">@Model.Contacts</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="navbar-slogan">
+        <span class="span-large white-text slogan">@Model.Slogan</span>
+    </div>
+</nav>

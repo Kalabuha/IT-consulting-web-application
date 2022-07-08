@@ -8,7 +8,7 @@ namespace Repositories
 {
     internal class ServiceRepository : BaseRepository<ServiceEntity>, IServiceRepository
     {
-        public ServiceRepository(DbContextProfiСonnector context) : base(context) { }
+        public ServiceRepository(DbContextProfiСonnector context) : base(context) {}
 
         public async Task<ServiceEntity[]> GetAllServiceEntitiesAsync()
         {

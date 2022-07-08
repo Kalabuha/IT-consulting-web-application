@@ -23,7 +23,7 @@ namespace WebAppForAdmins.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ApplicationsFilterViewModel>> Filter(ApplicationsFilterViewModel model)
+        public async Task<IActionResult> Filter(ApplicationsFilterViewModel model)
         {
             List<ApplicationModel> applications;
             // Пользоваетль выбрал период времени из списка предложенных
@@ -53,9 +53,11 @@ namespace WebAppForAdmins.Controllers
         }
 
         // GET: AcceptanceApplications/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            return View();
+            var application = await _applicationService.GetApplicationByID(id);
+
+            return View(application);
         }
 
         // GET: AcceptanceApplications/Create

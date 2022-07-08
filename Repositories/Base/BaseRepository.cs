@@ -31,9 +31,9 @@ namespace Repositories.Base
             await Context.SaveChangesAsync();
         }
 
-        public async Task<TEntity?> GetEntity(int id)
+        public async Task<TEntity?> GetEntity(int? id)
         {
-            return await Context.FindAsync<TEntity>(id);
+            return id.HasValue ? await Context.FindAsync<TEntity>(id) : null;
         }
     }
 }

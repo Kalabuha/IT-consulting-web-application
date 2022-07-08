@@ -26,8 +26,13 @@ namespace Services
 
         public async Task<List<ApplicationModel>> GetFilteredApplications(ApplicationStatus[] statuses, DateTime start, DateTime end)
         {
+            if (statuses == null || statuses.Length == 0 || start >= end)
+            {
+                return new List<ApplicationModel>();
+            }
+
             var applications = (await _applicationRepository.GetApplicationsAsync())
-                .Where(a => statuses.Contains(a.Status) && a.DateReceipt >= start && a.DateReceipt <= end)
+                .Where(a => statuses.Contains(a.Status) && start <= a.DateReceipt && a.DateReceipt <= end)
                 .Select(a => a.ApplicationEntityToModel())
                 .ToList();
 
@@ -42,33 +47,19 @@ namespace Services
             return application?.ApplicationEntityToModel();
         }
 
-        public async Task<int> GetFreeApplicationNumber()
-        {
-            var applications = await GetAllApplicationsAsync();
-            var allNumbers = applications.Select(a => a.Number).ToArray();
-
-            for (int i = 1; i < int.MaxValue; i++)
-            {
-                if (!allNumbers.Contains(i))
-                {
-                    return i;
-                }
-            }
-
-            throw new ApplicationException("Свободниые номера закончились");
-        }
-
-        public async Task AddApplicationToDb(ApplicationModel newApplication)
+        public async Task<int> AddApplicationToDb(ApplicationModel newApplication)
         {
             if (newApplication == null ||
                 string.IsNullOrEmpty(newApplication.GuestName) ||
                 string.IsNullOrEmpty(newApplication.GuestEmail) ||
                 string.IsNullOrEmpty(newApplication.GuestApplicationText))
             {
-                return;
+                return 0;
             }
 
-            await _applicationRepository.AddEntityAsync(newApplication.ApplicationModelToEntity());
+            var entity = newApplication.ApplicationModelToEntity();
+            await _applicationRepository.AddEntityAsync(entity);
+            return entity.Id;
         }
 
     }

@@ -10,6 +10,6 @@ namespace Repositories.Interfaces
 
         public Task RemoveEntityAsync(TEntity entity);
 
-        public Task<TEntity?> GetEntity(int id);
+        public Task<TEntity?> GetEntity(int? id);
     }
 }

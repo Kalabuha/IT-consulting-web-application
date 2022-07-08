@@ -6,9 +6,8 @@ namespace Services.Interfaces
     public interface IApplicationService
     {
         public Task<List<ApplicationModel>> GetAllApplicationsAsync();
-        public Task AddApplicationToDb(ApplicationModel newApplication);
+        public Task<ApplicationModel?> GetApplicationByID(int id);
+        public Task<int> AddApplicationToDb(ApplicationModel newApplication);
         public Task<List<ApplicationModel>> GetFilteredApplications(ApplicationStatus[] statuses, DateTime start, DateTime end);
-        public Task<int> GetFreeApplicationNumber();
-
     }
 }

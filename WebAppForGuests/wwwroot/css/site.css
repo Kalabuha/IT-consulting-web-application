@@ -21,6 +21,18 @@
   font-weight: bolder;
 }
 
+.span-large {
+  margin: 0;
+  font-size: 32px;
+  font-weight: bolder;
+}
+
+.span-mega-large {
+  font-size: 44px;
+  font-weight: bolder;
+  text-transform: uppercase;
+}
+
 .paragraph-large-text:last-child {
   margin-bottom: 0;
 }
@@ -102,7 +114,7 @@
 /* Header */
 .header {
   position: relative;
-  z-index: 5;
+  z-index: 3;
 }
 
 .navbar {
@@ -117,9 +129,13 @@
   text-align: right;
 }
 
+.navbar-slogan {
+  margin: 0 8% 0 0;
+}
+
 .navbar-list {
   display: inline-block;
-  margin: 0 3% 0 0;
+  margin: 0 3% 30px 0;
   padding: 0;
 }
 
@@ -144,6 +160,14 @@
 .nav-link:hover {
   border-radius: 5px;
   background-color: #4e00a0;
+}
+
+.slogan {
+  position: relative;
+  display: inline-block;
+  left: 83%;
+  transform: translate(-50%, 0);
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
 /* Main */
@@ -258,7 +282,7 @@
   background-image: url('../img/logos/youtube-logo.jpg');
 }
 
-/* START */
+/* HOME */
 .main-content-video-background {
   z-index: 1;
   width: 100%;
@@ -305,12 +329,15 @@
 
 /* CONTENT */
 /* Common */
+.link-drive-logo {
+  z-index: 4;
+}
+
 .drive-logo {
   display: inline-block;
   margin: 8px 0 0 3%;
   height: 105px;
   position: absolute;
-  z-index: 3;
 }
 
 .header-block {
@@ -337,8 +364,17 @@
   margin-bottom: 0;
 }
 
-.main-content-image {
+.main-content-block-image {
+  position: relative;
+  /* 16x9 */
+  width: 100%;
+  height: 658px;
   outline: 3px solid #4e00a0;
+  background-color: #2b0058;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  text-align: left;
 }
 
 .main-content-color-block {
@@ -363,13 +399,42 @@
   z-index: 4;
 }
 
-/* Home */
+/* Main */
 .header-block-home {
   background-image: url('../img/page-headers-img/header-background-img-1.jpg');
 }
 
 .form-label {
   font-size: 18px;
+}
+
+.content-block-image-button {
+  box-sizing: border-box;
+  padding: 40px 30px 0 0;
+  height: 81%;
+  text-align: right;
+}
+
+.content-block-image-phrase {
+  box-sizing: border-box;
+  padding: 0 0 0 35px;
+  height: 19%;
+  vertical-align: bottom;
+}
+
+.button-main-page {
+  padding: 20px 35px;
+  margin: 0;
+  background-color: #e31776;
+  border-radius: 10px;
+  text-transform: uppercase;
+  cursor: pointer;
+  z-index: 4;
+}
+
+.phrase-main-page {
+  display: inline-block;
+  width: 58%;
 }
 
 .background-message-application-sent {
@@ -452,6 +517,7 @@
 .service-item {
   text-align: left;
   margin: 0 0 30px 0;
+  z-index: 3;
 }
 
 .service-item:last-child {
@@ -469,12 +535,10 @@
   border: #4e00a0 solid 3px;
   width: 80%;
   border-radius: 10px;
-  z-index: 3;
 }
 
 .service-collapse-block-button {
   background-color: #4e00a0;
-
 }
 
 .service-title-text-collapse, .service-title-text-expand {

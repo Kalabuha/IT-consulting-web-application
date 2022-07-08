@@ -3,7 +3,6 @@
     position: relative;
     margin: 0 auto;
     width: 1170px;
-    height: 750px;
 }
 
 /* Texts */
@@ -176,6 +175,11 @@
     background-color: rgba(238, 238, 238, 0.6);
 }
 
+.content-block-relative {
+    text-align: center;
+    position: relative;
+}
+
 .button {
     height: 40px;
     width: 100%;
@@ -242,4 +246,41 @@
 
 .select-input-field:not(:last-child) {
     margin-right: 20px;
+}
+
+.robots-img {
+    position: relative;
+    width: 46%;
+    margin: 0;
+}
+
+.line-table {
+    border-collapse: separate;
+    width: 100%;
+    border-spacing: 0 6px;
+    table-layout: auto;
+}
+
+.line-table-head-row {
+    height: 50px;
+}
+
+.line-table-body-row {
+    height: 40px;
+    background-color: rgb(234, 234, 234);
+}
+
+.line-table-body-cell {
+    padding: 0 5px;
+    max-width: 220px;
+}
+
+.cell-text-center {
+    text-align: center;
+}
+
+.cut-long-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
