@@ -8,16 +8,21 @@ namespace WebAppForGuests.Controllers
     {
         private readonly ILogger<ProjectsController> _logger;
         private readonly IProjectService _projectService;
+        private readonly IHeaderService _headerService;
 
-        public ProjectsController(ILogger<ProjectsController> logger, IProjectService projectService)
+        public ProjectsController(ILogger<ProjectsController> logger, IProjectService projectService, IHeaderService headerService)
         {
             _logger = logger;
             _projectService = projectService;
+            _headerService = headerService;
         }
 
         [HttpGet]
         public async Task<ActionResult<ProjectsViewModel>> Index()
         {
+            var headerModel = await _headerService.GetPublishedHeaderModelAsync();
+            ViewBag.PageH1 = headerModel.Projects;
+
             var projects = await _projectService.GetPublishedProjectModelsAsync();
 
             return View(new ProjectsViewModel { Projects = projects });

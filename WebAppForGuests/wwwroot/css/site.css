@@ -114,13 +114,13 @@
 /* Header */
 .header {
   position: relative;
-  z-index: 3;
 }
 
 .navbar {
   position: absolute;
   margin: 50px 0 0 0;
   width: 100%;
+  z-index: 4;
 }
 
 .navbar-main {
@@ -329,15 +329,12 @@
 
 /* CONTENT */
 /* Common */
-.link-drive-logo {
-  z-index: 4;
-}
-
 .drive-logo {
   display: inline-block;
   margin: 8px 0 0 3%;
   height: 105px;
   position: absolute;
+  z-index: 6;
 }
 
 .header-block {

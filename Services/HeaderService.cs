@@ -21,17 +21,17 @@ namespace Services
             _random = new Random();
         }
 
-        public async Task<HeaderModel> GetHeaderModelAsync()
+        public async Task<HeaderModel> GetPublishedHeaderModelAsync()
         {
             var postedMenuSet = await _headerMenuSetRepository.GetPostedHeaderMenuEntitiesAsync();
             postedMenuSet ??= new HeaderMenuSetEntity
             {
                 Id = 0,
-                Main = nameof(postedMenuSet.Main),
-                Services = nameof(postedMenuSet.Services),
-                Projects = nameof(postedMenuSet.Projects),
-                Blogs = nameof(postedMenuSet.Blogs),
-                Contacts = nameof(postedMenuSet.Contacts),
+                Main = nameof(HeaderModel.Main),
+                Services = nameof(HeaderModel.Services),
+                Projects = nameof(HeaderModel.Projects),
+                Blogs = nameof(HeaderModel.Blogs),
+                Contacts = nameof(HeaderModel.Contacts),
                 IsPostedOnThePage = true
             };
 

@@ -12,23 +12,29 @@ namespace WebAppForGuests.Controllers
         private readonly IMainPageService _mainPageService;
         private readonly IApplicationService _applicationService;
         private readonly IDataValidationService _dataValidationService;
+        private readonly IHeaderService _headerService;
 
 
         public MainController(
             ILogger<MainController> logger,
             IMainPageService mainPageService,
             IApplicationService applicationService,
-            IDataValidationService dataValidationService)
+            IDataValidationService dataValidationService,
+            IHeaderService headerService)
         {
             _logger = logger;
             _mainPageService = mainPageService;
             _applicationService = applicationService;
             _dataValidationService = dataValidationService;
+            _headerService = headerService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index(ApplicationValidationResult? applicationValidationResult)
         {
+            var headerModel = await _headerService.GetPublishedHeaderModelAsync();
+            ViewBag.PageH1 = headerModel.Main;
+
             var mainPageModel = await _mainPageService.GetPublishedMainPageModelAsync();
             ViewBag.MainPageModel = mainPageModel;
 

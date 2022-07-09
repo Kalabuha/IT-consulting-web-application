@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Projects";
+    ViewBag.PageH1 ??= nameof(HeaderModel.Projects);
 }
 
 <div class="header-block header-block-projects">
@@ -12,7 +13,7 @@
 
 <div class="main-content-common">
     <div class="main-content-block main-content-color-block">
-        <h1 class="h1-text text-in-center">Проекты</h1>
+        <h1 class="h1-text text-in-center">@ViewBag.PageH1</h1>
     </div>
 
     <div class="main-content-block main-content-color-block">

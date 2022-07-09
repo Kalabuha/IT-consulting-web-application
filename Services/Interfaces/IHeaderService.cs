@@ -4,6 +4,6 @@ namespace Services.Interfaces
 {
     public interface IHeaderService
     {
-        public Task<HeaderModel> GetHeaderModelAsync();
+        public Task<HeaderModel> GetPublishedHeaderModelAsync();
     }
 }

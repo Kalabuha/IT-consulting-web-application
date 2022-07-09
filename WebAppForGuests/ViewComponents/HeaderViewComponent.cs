@@ -14,7 +14,7 @@ namespace WebAppForGuests.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var headerModel = await _headerService.GetHeaderModelAsync();
+            var headerModel = await _headerService.GetPublishedHeaderModelAsync();
 
             return View("Header", headerModel);
         }
