@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DbContextProfi.Migrations
 {
     [DbContext(typeof(DbContextProfiСonnector))]
-    [Migration("20220708091539_InitialMigration")]
+    [Migration("20220710152824_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -158,7 +158,7 @@ namespace DbContextProfi.Migrations
                     b.ToTable("Contacts");
                 });
 
-            modelBuilder.Entity("Resources.Entities.HeaderMenuEntity", b =>
+            modelBuilder.Entity("Resources.Entities.HeaderMenuSetEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -213,15 +213,15 @@ namespace DbContextProfi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<bool>("IsUsed")
+                        .HasColumnType("bit")
+                        .HasColumnName("Slogan_used");
+
                     b.Property<string>("Slogan")
                         .IsRequired()
                         .HasMaxLength(24)
                         .HasColumnType("nvarchar(24)")
                         .HasColumnName("Slogans");
-
-                    b.Property<bool>("Used")
-                        .HasColumnType("bit")
-                        .HasColumnName("Slogan_used");
 
                     b.HasKey("Id");
 
@@ -330,6 +330,12 @@ namespace DbContextProfi.Migrations
                     b.Property<int?>("PhraseId")
                         .HasColumnType("int")
                         .HasColumnName("Phrase_id");
+
+                    b.Property<string>("PresetName")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)")
+                        .HasColumnName("Preset_name");
 
                     b.Property<int?>("TextId")
                         .HasColumnType("int")

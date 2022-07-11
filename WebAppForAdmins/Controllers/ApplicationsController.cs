@@ -52,14 +52,6 @@ namespace WebAppForAdmins.Controllers
             });
         }
 
-        // GET: AcceptanceApplications/Details/5
-        public async Task<IActionResult> Details(int id)
-        {
-            var application = await _applicationService.GetApplicationByID(id);
-
-            return View(application);
-        }
-
         // GET: AcceptanceApplications/Create
         public ActionResult Create()
         {

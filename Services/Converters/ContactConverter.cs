@@ -28,7 +28,7 @@ namespace Services.Converters
                 Phone = model.Phone,
                 Fax = model.Fax,
                 MapAsArray64 = DataConverter.PathToImageToArray64(model.MapAsString),
-                IsPostedOnThePage = false
+                IsPublishedOnMainPage = false
             };
         }
     }

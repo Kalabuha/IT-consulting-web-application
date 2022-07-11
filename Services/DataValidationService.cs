@@ -169,7 +169,7 @@ namespace Services
         {
             foreach (char c in input)
             {
-                if (!char.IsLetter(c))
+                if (!(char.IsLetter(c) || char.IsWhiteSpace(c)))
                 {
                     return false;
                 }

@@ -7,6 +7,9 @@ namespace Resources.Entities
     [Table("Main_page_presets")]
     public class MainPagePresetEntity : PageEntity
     {
+        [Column("Preset_name"), Required, MaxLength(40)]
+        public string PresetName { get; set; } = default!;
+
         [Column("Text_id")]
         public int? TextId { get; set; }
         public MainPageTextEntity? Text { get; set; }

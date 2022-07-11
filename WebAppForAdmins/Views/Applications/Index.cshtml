@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Applications";
+    ViewData["Title"] = "Заявки";
 }
 
 <div class="container-content-common">
@@ -34,8 +34,8 @@
             }
         });
 
-        $(".select-collapsable").on("click", ".select-button-statuses", function(e) {
-            var collapsable = $(this).closest(".select-collapsable");
+        $(".buttons-panel-block").on("click", ".applications-button-select-statuses", function(e) {
+            var collapsable = $(this).closest(".buttons-panel-block");
             if(collapsable.hasClass("expanded"))
             {
                 collapsable.removeClass("expanded");
@@ -46,8 +46,8 @@
             }
         });
 
-        $(".select-collapsable").on("click", ".select-button-periods", function(e) {
-            var collapsable = $(this).closest(".select-collapsable");
+        $(".buttons-panel-block").on("click", ".applications-button-select-periods", function(e) {
+            var collapsable = $(this).closest(".buttons-panel-block");
             if(collapsable.hasClass("expanded"))
             {
                 collapsable.removeClass("expanded");

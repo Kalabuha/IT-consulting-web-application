@@ -6,6 +6,6 @@ namespace Resources.Entities.Base
     public abstract class PageEntity : BaseEntity
     {
         [Column("Is_posted_on_the_page"), Required]
-        public bool IsPostedOnThePage { get; set; }
+        public bool IsPublishedOnMainPage { get; set; }
     }
 }

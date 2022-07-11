@@ -5,6 +5,8 @@ namespace Repositories.Interfaces
     public interface IMainPagePresetRepository : IRepository<MainPagePresetEntity>
     {
         public Task<MainPagePresetEntity[]> GetAllMainPagePresetEntitiesAsync();
+        public Task<MainPagePresetEntity?> GetPublishedMainPagePresetEntityAsync();
+
 
     }
 }

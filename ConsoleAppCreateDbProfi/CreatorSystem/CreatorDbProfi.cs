@@ -38,7 +38,7 @@ namespace ConsoleAppCreateDbProfi.CreatorSystem
             var action = FillActionsTable("actions.json", 0);
             var button = FillButtonsTable("buttons.json", 1);
 
-            FillPagePresetTable(action, button, image, phrase, text);
+            FillPagePresetTable("Preset number 1", action, button, image, phrase, text);
 
             _context.SaveChanges();
 
@@ -73,7 +73,7 @@ namespace ConsoleAppCreateDbProfi.CreatorSystem
                     Projects = set.Projects,
                     Blogs = set.Blogs,
                     Contacts = set.Contacts,
-                    IsPostedOnThePage = set.IsPosted
+                    IsPublishedOnMainPage = set.IsPosted
                 };
 
                 _context.HeaderMenuSets.Add(entity);
@@ -143,7 +143,7 @@ namespace ConsoleAppCreateDbProfi.CreatorSystem
                     Phone = contact.Phone,
                     Fax = contact.Fax,
                     Postcode = contact.Postcode,
-                    IsPostedOnThePage = contact.IsPosted,
+                    IsPublishedOnMainPage = contact.IsPosted,
                 });
             }
         }
@@ -280,6 +280,7 @@ namespace ConsoleAppCreateDbProfi.CreatorSystem
         }
 
         private void FillPagePresetTable(
+            string presetName,
             MainPageActionEntity? action,
             MainPageButtonEntity? button,
             MainPageImageEntity? image,
@@ -288,12 +289,13 @@ namespace ConsoleAppCreateDbProfi.CreatorSystem
         {
             var preset = new MainPagePresetEntity
             {
+                PresetName = presetName,
                 Text = text,
                 Image = image,
                 Phrase = phrase,
                 Action = action,
                 Button = button,
-                IsPostedOnThePage = true
+                IsPublishedOnMainPage = true
             };
 
             _context.MainPagePresets.Add(preset);

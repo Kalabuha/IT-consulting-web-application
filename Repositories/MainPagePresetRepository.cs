@@ -17,5 +17,13 @@ namespace Repositories
 
             return presets;
         }
+
+        public async Task<MainPagePresetEntity?> GetPublishedMainPagePresetEntityAsync()
+        {
+            var publishedPreset = await Context.MainPagePresets
+                .FirstOrDefaultAsync(p => p.IsPublishedOnMainPage);
+
+            return publishedPreset;
+        }
     }
 }

@@ -1,7 +1,7 @@
-﻿@*@model*@
+﻿@model PresetInfo
 
 @{
-    ViewData["Title"] = "Home";
+    ViewData["Title"] = "Main";
 }
 
 <div class="container-content-common">
@@ -10,6 +10,144 @@
     </div>
 
     <div class="content-block">
-
+        <div class="buttons-panel">
+            <div class="buttons-panel-block">
+                <form id="SelectPresetForm" asp-area="" asp-controller="Main" asp-action="ShowSelectedPreset" method="post">
+                    <button class="button button-text-left button-max-width main-button-select-preset" type="button">
+                        <span class="large-text font-family-2 black-text">&#129095; Выбрать пресет</span>
+                    </button>
+                    <div class="block-absolute-max-width block-select-preset-collapse">
+                        <div class="select-block block-select-preset-list-block">
+                            @if (ViewBag.AllPresetsInfo != null && ViewBag.AllPresetsInfo.Count > 0)
+                            {
+                                bool isCheckedWas = false;
+                                <ul class="select-list">
+                                    @foreach (PresetInfo presetInfo in ViewBag.AllPresetsInfo)
+                                    {
+                                        <li class="select-list-item">
+                                            @if (isCheckedWas)
+                                            {
+                                                <input class="select-point" type="radio" name="presetId" id="preset-@presetInfo.Id" value="@presetInfo.Id" />
+                                            }
+                                            else
+                                            {
+                                                <input class="select-point" type="radio" name="presetId" id="preset-@presetInfo.Id" value="@presetInfo.Id" checked />
+                                            }
+                                            <label class="text font-family-2 black-text select-label" for="preset-@presetInfo.Id">@presetInfo.PresetName</label>
+                                        </li>
+                                        isCheckedWas = true;
+                                    }
+                                </ul>
+                            }
+                            else
+                            {
+                                <span class="middle-text font-family-2 black-text">
+                                    Пресетов пока нет. Вы могли бы создать новый, для этого нажмите кнопку "Создать".
+                                </span>
+                            }
+                        </div>
+                        <div class="block-select-preset-button-block">
+                            <button class="button button-max-width select-preset-submit-button" type="submit">
+                                <span class="large-text font-family-2 black-text">Подтвердить</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="buttons-panel-block">
+                <form id="CreatePresetForm" asp-area="" asp-controller="Main" asp-action="CreatePreset" method="get">
+                    <button class="button button-text-left button-max-width main-button-create-preset" type="button">
+                        <span class="large-text font-family-2 black-text">&#10084; Создать</span>
+                    </button>
+                </form>
+            </div>
+            <div class="buttons-panel-block">
+                <form id="DeletePresetForm" asp-area="" asp-controller="Main" asp-action="DeletePreset" method="get">
+                    <button class="button button-text-left button-max-width main-button-delete-preset" type="button">
+                        <span class="large-text font-family-2 black-text">&#10006; Удалить</span>
+                    </button>
+                </form>
+            </div>
+            <div class="buttons-panel-block">
+                <form id="UpdatePresetForm" asp-area="" asp-controller="Main" asp-action="UpdatePreset" method="get">
+                    <button class="button button-text-left button-max-width main-button-update-preset" type="button">
+                        <span class="large-text font-family-2 black-text">&#9209; Изменить</span>
+                    </button>
+                </form>
+            </div>
+        </div>
     </div>
+
+    @if (ViewBag.PublishedMainPage != null)
+    {
+        <div class="content-block">
+            <h2 class="font-family-1 h2-standart-page white-text">Выбран пресет: @ViewBag.PublishedMainPage.PresetName</h2>
+        </div>
+
+        <div class="content-block preset-content-block">
+            <p class="middle-text font-family-2 black-text paragraph">@ViewBag.PublishedMainPage.Text</p>
+        </div>
+
+        <div class="content-block preset-content-block-img" style="background-image: url('@ViewBag.PublishedMainPage.Image')">
+            <div class="preset-content-block-img-button-block block-text-rigth">
+                <span class="preset-content-button biggest-text font-family-2 white-text">@ViewBag.PublishedMainPage.Button</span>
+            </div>
+            <div class="preset-content-block-img-phrase-block">
+                <span class="preset-content-phrase mega-text font-family-2 white-text">@ViewBag.PublishedMainPage.Phrase</span>
+            </div>
+        </div>
+
+        <div class="content-block preset-content-block">
+
+            <div class="preset-input-block">
+                <div class="input-block-header">
+                    <span class="biggest-text font-family-2 black-text">@ViewBag.PublishedMainPage.Action</span>
+                </div>
+                <div class="input-block-top">
+                    <div class="input-block-top-item input-block-item">
+                        <span class="input-block-label middle-text font-family-2 black-text">Имя</span>
+                        <div class="input-block-field"></div>
+                    </div>
+                    <div class="input-block-top-item input-block-item">
+                        <span class="input-block-label middle-text font-family-2 black-text">E-mail</span>
+                        <div class="input-block-field"></div>
+                    </div>
+                </div>
+                <div class="input-block-middle-item">
+                    <div class="input-block-item">
+                        <span class="input-block-label middle-text font-family-2 black-text">Текст сообщения</span>
+                        <div class="input-block-field"></div>
+                    </div>
+                </div>
+                <div class="preset-input-block-bottom">
+                    <div class="input-block-button">
+                        <span class="biggest-text font-family-2 white-text">Отправить</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+
+    }
 </div>
+
+@section Scripts
+{
+<script>
+    $(function() {
+        $(".buttons-panel-block").on("click", ".main-button-select-preset", function(e) {
+            var collapsable = $(this).closest(".buttons-panel-block");
+            if(collapsable.hasClass("expanded"))
+            {
+                collapsable.removeClass("expanded");
+            }
+            else
+            {
+                collapsable.addClass("expanded");
+            }
+        });
+    });
+</script>
+}

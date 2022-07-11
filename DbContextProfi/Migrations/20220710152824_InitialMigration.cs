@@ -201,6 +201,7 @@ namespace DbContextProfi.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Preset_name = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
                     Text_id = table.Column<int>(type: "int", nullable: true),
                     Image_id = table.Column<int>(type: "int", nullable: true),
                     Phrase_id = table.Column<int>(type: "int", nullable: true),

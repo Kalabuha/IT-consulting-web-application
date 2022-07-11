@@ -21,7 +21,7 @@ namespace Repositories
         public async Task<HeaderMenuSetEntity?> GetPostedHeaderMenuEntitiesAsync()
         {
             var usedHeaderMenuSets = await Context.HeaderMenuSets
-                .FirstOrDefaultAsync(m => m.IsPostedOnThePage == true);
+                .FirstOrDefaultAsync(m => m.IsPublishedOnMainPage == true);
 
             return usedHeaderMenuSets;
         }

@@ -26,7 +26,7 @@ namespace Services
         public async Task<ContactModel?> GetPublishedContactModelAsync()
         {
             var contact = (await _contactRepository.GetAllContactEntitiesAsync())
-                .FirstOrDefault(c => c.IsPostedOnThePage == true);
+                .FirstOrDefault(c => c.IsPublishedOnMainPage == true);
 
             return contact?.ContactEntityToModel();
         }

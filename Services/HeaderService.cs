@@ -32,7 +32,7 @@ namespace Services
                 Projects = nameof(HeaderModel.Projects),
                 Blogs = nameof(HeaderModel.Blogs),
                 Contacts = nameof(HeaderModel.Contacts),
-                IsPostedOnThePage = true
+                IsPublishedOnMainPage = true
             };
 
             var usedHeaderSlogans = await _headerSloganRepository.GetUsedHeaderSloganEntitiesAsync();
