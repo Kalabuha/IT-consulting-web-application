@@ -4,8 +4,7 @@ namespace Services.Common
 {
     public abstract class DefaultDataService
     {
-        protected readonly string _directoryDefaultTextFiles = @"wwwroot\txt\default-texts";
-        protected readonly string _directorDefaultImages = @"/img/default-images/";
+        protected readonly string _directoryDefaultTextFiles = @"..\Services\Common\DefaultData\txt";
 
         protected async Task<string> GetDefaultTextFromFile(string nameTxtFile)
         {
@@ -28,13 +27,6 @@ namespace Services.Common
             }
 
             return defaultString;
-        }
-
-        protected string GetDefaultImage(string nameImage)
-        {
-            var pathToDefaultImage = _directorDefaultImages + nameImage;
-
-            return pathToDefaultImage;
         }
     }
 }

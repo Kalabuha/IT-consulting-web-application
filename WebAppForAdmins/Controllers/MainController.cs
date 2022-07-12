@@ -20,22 +20,19 @@ namespace WebAppForAdmins.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(int? selectedPresetId)
         {
-            PresetInfo? currentPresetInfo;
-
+            var mainViewModel = new MainViewModel();
             if (selectedPresetId.HasValue && selectedPresetId.Value > 0)
             {
-                currentPresetInfo = await _mainPageService.GetPresetInfoByIdAsync(selectedPresetId.Value);
-                ViewBag.PublishedMainPage = await _mainPageService.GetMainPageModelByIdAsync(selectedPresetId.Value);
+                mainViewModel.MainPageModel = await _mainPageService.GetMainPageModelByIdAsync(selectedPresetId.Value);
             }
             else
             {
-                currentPresetInfo = await _mainPageService.GetPublishedPresetInfoAsync();
-                ViewBag.PublishedMainPage = await _mainPageService.GetPublishedMainPageModelAsync();
+                mainViewModel.MainPageModel = await _mainPageService.GetPublishedMainPageModelAsync();
             }
 
-            ViewBag.AllPresetsInfo = await _mainPageService.GetAllPresetInfosAsync();
+            mainViewModel.PresetInfos = await _mainPageService.GetAllPresetInfosAsync();
 
-            return View(currentPresetInfo);
+            return View(mainViewModel);
         }
 
         [HttpPost]
@@ -53,24 +50,6 @@ namespace WebAppForAdmins.Controllers
             }
 
             return RedirectToAction(nameof(Index));
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> CreatePreset()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> UpdatePreset()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> DeletePreset()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

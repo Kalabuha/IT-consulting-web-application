@@ -34,6 +34,14 @@
     color: gold;
 }
 
+.green-text {
+    color: forestgreen;
+}
+
+.blue-text {
+    color:mediumblue;
+}
+
 .h1-standart-page, .h2-standart-page, .text, .middle-text, .large-text, .biggest-text, .giant-text, .mega-text {
     margin: 0;
 }
@@ -42,14 +50,14 @@
     font-size: 32px;
     font-weight: 600;
     text-align: center;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.1em;
 }
 
 .h2-standart-page {
     font-size: 28px;
     font-weight: 600;
     text-align: center;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.1em;
 }
 
 .text {
@@ -84,6 +92,8 @@
 
 .paragraph {
     line-height: 1.4;
+    letter-spacing: 0.1em;
+    text-align: justify;
 }
 
 /* HEADER */
@@ -190,7 +200,10 @@
 /* Common */
 .content-block {
     margin: 0 0 20px 0;
-    width: 100%;
+}
+
+.content-block-inner {
+    margin: 0 0 10px 0;
 }
 
 .content-block:last-child {
@@ -378,6 +391,11 @@
     width: 100%;
 }
 
+.is-published-or-not-block {
+    display: flex;
+    justify-content: space-around;
+}
+
 .preset-content-block {
     box-sizing: border-box;
     padding: 20px;
@@ -385,41 +403,53 @@
     background-color:lightgray;
 }
 
-.preset-content-block-img {
+.preset-content-img {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     height: 562px;
     background-repeat: no-repeat;
     background-size: cover;
     border-radius: 5px;
-    outline: 3px solid #4e00a0;
 }
 
-.preset-content-block-img-button-block {
-    box-sizing: border-box;
-    padding-top: 40px;
-    padding-right: 28px;
+.preset-content-img-button-block {
+    display: flex;
+    justify-content: flex-end;
     margin: 0;
-
-    height: 81%;
 }
 
-.preset-content-button {
-    padding: 20px 35px;
-    background-color: #e31776;
-    border-radius: 10px;
-    text-transform: uppercase;
-}
-
-.preset-content-block-img-phrase-block {
-    box-sizing: border-box;
-    padding-left: 28px;
-    margin: 0;
-    height: 19%;
-}
-
-.preset-content-phrase {
+.preset-button-shell {
     display: inline-block;
+    border-radius: 10px;
+    padding: 20px 35px;
+    margin: 20px 25px 0 0;
+}
+
+.preset-button-content {
     text-transform: uppercase;
+}
+
+.preset-content-img-image-missing-block {
+    text-align: center;
+}
+
+.preset-content-img-phrase-block {
+    margin: 0;
+}
+
+.preset-phrase-shell {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 10px;
+    height: 80px;
     width: 58%;
+    margin: 0 0 25px 25px;
+}
+
+.preset-phrase-content {
+    text-transform: uppercase;
 }
 
 .preset-input-block {

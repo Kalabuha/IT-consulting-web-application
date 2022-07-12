@@ -38,16 +38,14 @@ namespace Services
         {
             var presets = await _presetRepository.GetAllMainPagePresetEntitiesAsync();
 
-            var presetInfos = new List<PresetInfo>();
-            foreach (var preset in presets)
-            {
-                presetInfos.Add(new PresetInfo
+            var presetInfos = presets
+                .Select(preset => new PresetInfo
                 {
                     Id = preset.Id,
                     PresetName = preset.PresetName,
                     IsPublished = preset.IsPublishedOnMainPage
-                });
-            }
+                })
+                .ToList();
 
             return presetInfos;
         }
@@ -60,12 +58,14 @@ namespace Services
                 return null;
             }
 
-            return new PresetInfo
+            var publishedPresetInfo = new PresetInfo
             {
                 Id = publishedPreset.Id,
                 PresetName = publishedPreset.PresetName,
                 IsPublished = publishedPreset.IsPublishedOnMainPage
             };
+
+            return publishedPresetInfo;
         }
 
         public async Task<PresetInfo?> GetPresetInfoByIdAsync(int presetId)
@@ -76,12 +76,14 @@ namespace Services
                 return null;
             }
 
-            return new PresetInfo
+            var presetInfo = new PresetInfo
             {
                 Id = preset.Id,
                 PresetName = preset.PresetName,
                 IsPublished = preset.IsPublishedOnMainPage
             };
+
+            return presetInfo;
         }
 
         public async Task<List<MainPageModel>> GetAllMainPageModelsAsync()
@@ -89,6 +91,7 @@ namespace Services
             var presets = await _presetRepository.GetAllMainPagePresetEntitiesAsync();
 
             var mainPageModels = new List<MainPageModel>();
+
             foreach (var preset in presets)
             {
                 mainPageModels.Add(await AssembleModelFromPreset(preset));
@@ -99,17 +102,21 @@ namespace Services
 
         public async Task<MainPageModel> GetPublishedMainPageModelAsync()
         {
-            var publishedMainPagePreset = await _presetRepository.GetPublishedMainPagePresetEntityAsync();
-            var publishedMainPageModel = await AssembleModelFromPreset(publishedMainPagePreset);
+            var publishedPreset =
+                await _presetRepository.GetPublishedMainPagePresetEntityAsync() ?? CreateDefaultMainPagePresetEntity();
+
+            var publishedMainPageModel = await AssembleModelFromPreset(publishedPreset);
 
             return publishedMainPageModel;
         }
 
         public async Task<MainPageModel> GetMainPageModelByIdAsync(int presetId)
         {
-            var preset = await _presetRepository.GetEntity(presetId);
+            var preset = await _presetRepository.GetEntity(presetId) ?? CreateDefaultMainPagePresetEntity();
 
-            return await AssembleModelFromPreset(preset);
+            var mainPageModel = await AssembleModelFromPreset(preset);
+
+            return mainPageModel;
         }
 
         public async Task PublishPreset(int presetId)
@@ -134,13 +141,12 @@ namespace Services
             await _presetRepository.UpdateEntityAsync(publishPreset);
         }
 
-        private async Task<MainPageModel> AssembleModelFromPreset(MainPagePresetEntity? preset)
+        private async Task<MainPageModel> AssembleModelFromPreset(MainPagePresetEntity preset)
         {
-            preset ??= new MainPagePresetEntity()
+            if (preset.Id <= 0)
             {
-                Id = -1,
-                PresetName = "Пресет по умолчанию"
-            };
+                return await CreateDefaultMainPageModel(preset);
+            }
 
             var actionEntity = await _actionRepository.GetEntity(preset.ActionId);
             var buttonEntity = await _buttonRepository.GetEntity(preset.ButtonId);
@@ -148,17 +154,58 @@ namespace Services
             var phraseEntity = await _phraseRepository.GetEntity(preset.PhraseId);
             var textEntity = await _textRepository.GetEntity(preset.TextId);
 
-            var mainPageModel = new MainPageModel();
+            var mainPageModel = new MainPageModel()
+            {
+                Id = preset.Id,
+                PresetName = preset.PresetName,
+                IsPublished = preset.IsPublishedOnMainPage,
 
-            mainPageModel.Id = preset.Id;
-            mainPageModel.PresetName = preset.PresetName;
-            mainPageModel.Button = buttonEntity != null ? buttonEntity.Button : await GetDefaultTextFromFile("button.txt");
-            mainPageModel.Action = actionEntity != null ? actionEntity.Action : await GetDefaultTextFromFile("action.txt");
-            mainPageModel.Image = imageEntity != null ? DataConverter.Array64ToString(imageEntity.ImageAsArray64) : GetDefaultImage("consulting.jpg");
-            mainPageModel.Phrase = phraseEntity != null ? phraseEntity.Phrase : await GetDefaultTextFromFile("phrase.txt");
-            mainPageModel.Text = textEntity != null ? textEntity.Text : await GetDefaultTextFromFile("text.txt");
+                ActionId = preset.ActionId,
+                Action = actionEntity != null ? actionEntity.Action : string.Empty,
+
+                ButtonId = preset.ButtonId,
+                Button = buttonEntity != null ? buttonEntity.Button : string.Empty,
+
+                ImageId = preset.ImageId,
+                Image = imageEntity != null ? DataConverter.Array64ToString(imageEntity.ImageAsArray64) : string.Empty,
+
+                PhraseId = preset.PhraseId,
+                Phrase = phraseEntity != null ? phraseEntity.Phrase : string.Empty,
+
+                TextId = preset.TextId,
+                Text = textEntity != null ? textEntity.Text : string.Empty
+            };
 
             return mainPageModel;
+        }
+
+        private MainPagePresetEntity CreateDefaultMainPagePresetEntity()
+        {
+            var defaultMainPagePresetEntity = new MainPagePresetEntity()
+            {
+                Id = -1,
+                PresetName = "Пресет по умолчанию",
+            };
+
+            return defaultMainPagePresetEntity;
+        }
+
+        private async Task<MainPageModel> CreateDefaultMainPageModel(MainPagePresetEntity defaultPreset)
+        {
+            var defaultMainPageModel = new MainPageModel()
+            {
+                Id = defaultPreset.Id,
+                PresetName = defaultPreset.PresetName,
+                IsPublished = false,
+
+                Action = await GetDefaultTextFromFile("action.txt"),
+                Button = string.Empty,
+                Image = string.Empty,
+                Phrase = string.Empty,
+                Text = await GetDefaultTextFromFile("text.txt")
+            };
+
+            return defaultMainPageModel;
         }
     }
 }
