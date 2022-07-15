@@ -35,11 +35,19 @@
 }
 
 .green-text {
-    color: forestgreen;
+    color: rgb(21, 157, 21);
 }
 
 .blue-text {
     color:mediumblue;
+}
+
+.text-shadow {
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+}
+
+.bolder {
+    font-weight: bolder;
 }
 
 .h1-standart-page, .h2-standart-page, .text, .middle-text, .large-text, .biggest-text, .giant-text, .mega-text {
@@ -198,20 +206,33 @@
 }
 /* CONTENT */
 /* Common */
-.content-block {
-    margin: 0 0 20px 0;
+.content-block-small-indent {
+    margin: 0 0 6px 0;
+}
+
+.content-block-standart-indent {
+    margin: 0 0 25px 0;
 }
 
 .content-block-inner {
     margin: 0 0 10px 0;
 }
 
-.content-block:last-child {
-    margin-bottom: 10px;
-}
-
 .content-block-relative {
     position: relative;
+}
+
+.button {
+    cursor: pointer;
+    border: 1px solid black;
+}
+
+.low-button {
+    height: 32px;
+}
+
+.high-button {
+    height: 40px;
 }
 
 .button-text-left {
@@ -222,13 +243,18 @@
     text-align: right;
 }
 
-.button {
-    height: 40px;
-    cursor: pointer;
+.button-width-1 {
+    width: 160px;
 }
 
 .button-max-width {
     width: 100%;
+}
+
+.buttons-panel-left {
+    display: flex;
+    justify-content: left;
+    gap: 5px;
 }
 
 .buttons-panel {
@@ -257,10 +283,17 @@
 
 .select-block {
     box-sizing: border-box;
-    padding-top: 10px;
-    padding-left: 8px;
-    padding-bottom: 8px;
-    background-color: rgba(238, 238, 238, 0.8);
+    padding: 8px;
+    background-color: rgba(238, 238, 238, 0.82);
+}
+
+.scroll-y-block {
+    overflow-y: scroll;
+}
+
+.scroll-x-y-block {
+    overflow-y: scroll;
+    overflow-x: scroll;
 }
 
 .select-list {
@@ -269,13 +302,17 @@
 }
 
 .select-list-item {
-    display: flex;
-    justify-content: start;
     margin-bottom: 5px;
 }
 
 .select-list-item:last-child {
     margin-bottom: 0;
+}
+
+.select-list-item-block {
+    margin: 0;
+    display: flex;
+    justify-content: start;
 }
 
 .select-point {
@@ -296,22 +333,6 @@
 
 .block-select-application-periods-collapse {
     z-index: 3;
-}
-
-.buttons-panel-block .block-select-application-statuses-collapse {
-    display: none;
-}
-
-.buttons-panel-block.expanded .block-select-application-statuses-collapse {
-    display: block;
-}
-
-.buttons-panel-block .block-select-application-periods-collapse {
-    display: none;
-}
-
-.buttons-panel-block.expanded .block-select-application-periods-collapse {
-    display: block;
 }
 
 .robots-img {
@@ -373,18 +394,12 @@
     z-index: 3;
 }
 
-.buttons-panel-block .block-select-preset-collapse {
-    display: none;
+.select-block-height {
+    height: 220px;
 }
 
-.buttons-panel-block.expanded .block-select-preset-collapse {
-    display: block;
-}
-
-.block-select-preset-list-block {
-    height: 280px;
-    overflow-y: scroll;
-    overflow-x: scroll;
+.select-block-height-2 {
+    height: 300px;
 }
 
 .block-select-preset-button-block {
@@ -396,11 +411,35 @@
     justify-content: space-around;
 }
 
+.enter-preset-name-block {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
+
+.input-preset-name-textarea {
+    padding: 5px;
+    max-width: 94%;
+    min-width: 94%;
+
+    min-height: 64%;
+    max-height: 64%;
+}
+
 .preset-content-block {
     box-sizing: border-box;
     padding: 20px;
     border-radius: 5px;
-    background-color:lightgray;
+    background-color: lightgray;
+}
+
+.preset-text-content-block-empty {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 5px;
+    outline: 5px dashed lightgray;
+    min-height: 160px;
 }
 
 .preset-content-img {
@@ -452,6 +491,39 @@
     text-transform: uppercase;
 }
 
+.tabs {
+    margin: 0;
+}
+
+.tab-navbar-item {
+    flex: 0 1 170px;
+}
+
+.select-block-inner-block {
+    box-sizing: border-box;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.tab-content-block {
+    margin: 0 0 8px 0;
+}
+
+.tab-span-select {
+    margin-left: 32px;
+}
+
+.tab-content-select-block {
+    box-sizing: border-box;
+    padding: 8px;
+    max-height: 220px;
+    background-color: rgb(234, 234, 234);
+    border: 1px solid black
+}
+
+/* .tab-content-item {
+} */
+
 .preset-input-block {
     margin: 0;
     display: flex;
@@ -462,6 +534,17 @@
 .input-block-header {
     display: flex;
     justify-content: space-around;
+}
+
+.preset-input-action-block-empty {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    outline: 5px dashed black;
+    border-radius: 10px;
+    height: 60px;
+    width: 65%;
+    z-index: 2;
 }
 
 .input-block-top {
@@ -505,4 +588,99 @@
     height: 70px;
     background-color: #4e00a0;
     border-radius: 15px;
+}
+
+.final-block {
+    display: flex;
+    justify-content: space-around;
+    margin: 0 0 60px 0;
+}
+
+.final-block:last-child {
+    margin-bottom: 0;
+}
+
+.crash-image-robot {
+    width: 40%;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* COLLAPSABLE */
+/* Application */
+.buttons-panel-block .block-select-application-statuses-collapse {
+    display: none;
+}
+
+.buttons-panel-block.expanded .block-select-application-statuses-collapse {
+    display: block;
+}
+
+.buttons-panel-block .block-select-application-periods-collapse {
+    display: none;
+}
+
+.buttons-panel-block.expanded .block-select-application-periods-collapse {
+    display: block;
+}
+
+/* Main */
+.buttons-panel-block .block-select-preset-collapse {
+    display: none;
+}
+
+.buttons-panel-block.expanded .block-select-preset-collapse {
+    display: block;
+}
+
+.buttons-panel-block .block-delete-preset-collapse {
+    display: none;
+}
+
+.buttons-panel-block.expanded .block-delete-preset-collapse {
+    display: block;
+}
+
+.buttons-panel-block .block-create-preset-collapse {
+    display: none;
+}
+
+.buttons-panel-block.expanded .block-create-preset-collapse {
+    display: block;
+}
+
+.buttons-panel-block .block-change-text-content-collapse {
+    display: none;
+}
+
+.buttons-panel-block.expanded .block-change-text-content-collapse {
+    display: block;
+}
+
+.buttons-panel-block .block-change-image-content-collapse {
+    display: none;
+}
+
+.buttons-panel-block.expanded .block-change-image-content-collapse {
+    display: block;
+}
+
+.buttons-panel-block .block-change-action-content-collapse {
+    display: none;
+}
+
+.buttons-panel-block.expanded .block-change-action-content-collapse {
+    display: block;
+}
+
+.tab-content-item {
+    display: none;;
 }

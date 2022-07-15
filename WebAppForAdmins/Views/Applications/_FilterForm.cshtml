@@ -1,9 +1,9 @@
 ﻿@model ApplicationsFilterViewModel
 
-<form id="RequestFilterForm" class="form-filter" asp-action="Filter" asp-controller="Applications" method="POST">
+<form id="RequestFilterForm" class="form-filter" asp-action="Filter" asp-controller="Applications" method="post">
     <div class="buttons-panel">
         <div class="buttons-panel-block buttons-panel-wide-block">
-            <button class="button button-text-left button-max-width applications-button-select-statuses" type="button">
+            <button class="button high-button button-text-left button-max-width applications-button-select-statuses" type="button">
                 <span class="large-text font-family-2 black-text">&#129095; Статусы заявок</span>
             </button>
             <div class="block-absolute-max-width block-select-application-statuses-collapse">
@@ -14,16 +14,18 @@
                             var currentId = $"RequestedStatuses_{status.ToString()}";
                             var name = @Html.NameFor(p => p.RequestedStatuses);
                             <li class="select-list-item">
-                                @if (status == ApplicationStatus.Initial)
-                                {
-                                    <input class="select-point" type="checkbox" name="@name" id="@currentId" value="@status" checked />
-                                }
-                                else
-                                {
-                                    <input class="select-point" type="checkbox" name="@name" id="@currentId" value="@status" />
-                                }
+                                <div class="select-list-item-block">
+                                    @if (status == ApplicationStatus.Initial)
+                                    {
+                                        <input class="select-point" type="checkbox" name="@name" id="@currentId" value="@status" checked />
+                                    }
+                                    else
+                                    {
+                                        <input class="select-point" type="checkbox" name="@name" id="@currentId" value="@status" />
+                                    }
 
-                                <label class="text font-family-2 black-text select-label" for="@currentId">@status.TranslateApplicationStatusToDisplayPluralString()</label>
+                                    <label class="text font-family-2 black-text select-label" for="@currentId">@status.TranslateApplicationStatusToDisplayPluralString()</label>
+                                </div>
                             </li>
                         }
                     </ul>
@@ -32,7 +34,7 @@
         </div>
 
         <div class="buttons-panel-block buttons-panel-wide-block">
-            <button class="button button-text-left button-max-width applications-button-select-periods" type="button">
+            <button class="button high-button button-text-left button-max-width applications-button-select-periods" type="button">
                 <span class="large-text font-family-2 black-text">&#129095; Указать период</span>
             </button>
             <div class="block-absolute-max-width block-select-application-periods-collapse">
@@ -45,30 +47,32 @@
                             var nameStartPeriod = @Html.NameFor(p => p.StartTimePeriod);
                             var nameEndPeriod = @Html.NameFor(p => p.EndTimePeriod);
                             <li class="select-list-item">
-                                @if (period == DateTimePeriod.Day)
-                                {
-                                    <input class="select-point" type="radio" name="@name" id="@currentId" value="@period" checked />
-                                }
-                                else
-                                {
-                                    <input class="select-point" type="radio" name="@name" id="@currentId" value="@period" />
-                                }
+                                <div class="select-list-item-block">
+                                    @if (period == DateTimePeriod.Day)
+                                    {
+                                        <input class="select-point" type="radio" name="@name" id="@currentId" value="@period" checked />
+                                    }
+                                    else
+                                    {
+                                        <input class="select-point" type="radio" name="@name" id="@currentId" value="@period" />
+                                    }
 
-                                @if (period != DateTimePeriod.SelectedPeriodDateTime)
-                                {
-                                    <label class="text font-family-2 black-text select-label" for="@currentId">@period.TranslateDateTimePeriodToDisplayString()</label>
-                                }
-                                else
-                                {
-                                    <div class="select-list-item-mini-block">
-                                        <label class="text font-family-2 black-text select-label" for="@nameStartPeriod">От:</label>
-                                        <input class="select-input-field" type="date" name="@nameStartPeriod" id="StartDateTiem" />
-                                    </div>
-                                    <div class="select-list-item-mini-block">
-                                        <label class="text font-family-2 black-text select-label" for="@nameEndPeriod">До:</label>
-                                        <input class="select-input-field" type="date" name="@nameEndPeriod" id="EndDateTiem" />
-                                    </div>
-                                }
+                                    @if (period != DateTimePeriod.SelectedPeriodDateTime)
+                                    {
+                                        <label class="text font-family-2 black-text select-label" for="@currentId">@period.TranslateDateTimePeriodToDisplayString()</label>
+                                    }
+                                    else
+                                    {
+                                        <div class="select-list-item-mini-block">
+                                            <label class="text font-family-2 black-text select-label" for="@nameStartPeriod">От:</label>
+                                            <input class="select-input-field" type="date" name="@nameStartPeriod" id="StartDateTiem" />
+                                        </div>
+                                        <div class="select-list-item-mini-block">
+                                            <label class="text font-family-2 black-text select-label" for="@nameEndPeriod">До:</label>
+                                            <input class="select-input-field" type="date" name="@nameEndPeriod" id="EndDateTiem" />
+                                        </div>
+                                    }
+                                </div>
                             </li>
                         }
                     </ul>
@@ -77,7 +81,7 @@
         </div>
 
         <div class="buttons-panel-block buttons-panel-narrow-block">
-            <button class="button button-max-width" type="submit">
+            <button class="button high-button button-max-width" type="submit">
                 <span class="large-text font-family-2 black-text">Поиск</span>
             </button>
         </div>

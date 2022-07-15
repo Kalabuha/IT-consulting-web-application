@@ -1,4 +1,8 @@
-﻿namespace Services.Converters
+﻿using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
+using SixLabors.ImageSharp.Formats.Png;
+
+namespace Services.Converters
 {
     public static class DataConverter
     {
@@ -40,5 +44,12 @@
 
             return text.Substring(0, length);
         }
+
+        //public static void ImageResizing(string imagePath)
+        //{
+        //    image.w
+
+        //    Image image = Image.Load();
+        //}
     }
 }

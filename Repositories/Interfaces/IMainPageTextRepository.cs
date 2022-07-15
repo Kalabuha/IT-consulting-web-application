@@ -4,6 +4,6 @@ namespace Repositories.Interfaces
 {
     public interface IMainPageTextRepository : IRepository<MainPageTextEntity>
     {
-        public Task<MainPageTextEntity[]> GetAllTextEntitiesAsync();
+        public Task<MainPageTextEntity[]> GetAllMainPageTextEntitiesAsync();
     }
 }

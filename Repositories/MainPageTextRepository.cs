@@ -10,7 +10,7 @@ namespace Repositories
     {
         public MainPageTextRepository(DbContextProfiСonnector context) : base(context) { }
 
-        public async Task<MainPageTextEntity[]> GetAllTextEntitiesAsync()
+        public async Task<MainPageTextEntity[]> GetAllMainPageTextEntitiesAsync()
         {
             var texts = await Context.MainPageTexts
                 .ToArrayAsync();

@@ -27,6 +27,10 @@ span::selection {
   background-color: goldenrod;
 }
 
+label::selection {
+  background-color: goldenrod;
+}
+
 h1::selection {
   background-color: goldenrod;
 }

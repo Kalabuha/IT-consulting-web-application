@@ -1,12 +1,9 @@
 ﻿using Resources.Models;
 
-namespace WebAppForAdmins.Models
+namespace Resources.Containers
 {
-    public class MainViewModel
+    public class MainPageAllDataContainer
     {
-        public MainPageModel MainPageModel { get; set; } = default!;
-        public IList<PresetInfo> PresetInfos { get; set; } = default!;
-
         public IList<MainPageActionModel> Actions { get; set; } = default!;
         public IList<MainPageButtonModel> Buttons { get; set; } = default!;
         public IList<MainPageImageModel> Images { get; set; } = default!;
