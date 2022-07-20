@@ -1,0 +1,69 @@
+﻿@model ProjectModel
+
+<input type="hidden" name="project.Id" value="@Model.Id" />
+<input type="hidden" name="project.CustomerCompanyLogoAsString" value="@Model.CustomerCompanyLogoAsString"/>
+
+<div class="content-block-standart-indent preset-content-block">
+    <div class="label-prompt">
+        <span class="large-text font-family-2 black-text">Заголовок проекта</span>
+    </div>
+
+    <textarea class="middle-text font-family-2 paragraph project-text-area-title" name="project.ProjectTitle" placeholder="Вводи заголовок сюда">@Model.ProjectTitle</textarea>
+
+    @if (!string.IsNullOrEmpty(Model.ProjectTitleValidationMessage))
+    {
+        <div class="error-message-block">
+            <span class="middle-text font-family-2 red-text">@Model.ProjectTitleValidationMessage</span>
+        </div>
+    }
+</div>
+
+<div class="content-block-standart-indent preset-content-block">
+    <div class="project-content">
+        <div class="project-block-description">
+            <div class="label-prompt">
+                <span class="large-text font-family-2 black-text">Описание проекта</span>
+            </div>
+
+            <textarea class="middle-text font-family-2 paragraph project-text-area-description" name="project.ProjectDescription" placeholder="Вводи описание сюда">@Model.ProjectDescription</textarea>
+
+            @if (!string.IsNullOrEmpty(Model.ProjectDescriptionValidationMessage))
+            {
+                <div class="error-message-block">
+                    <span class="middle-text font-family-2 red-text">@Model.ProjectDescriptionValidationMessage</span>
+                </div>
+            }
+        </div>
+        <div class="project-block-logo-and-link">
+            <div class="label-prompt">
+                <span class="large-text font-family-2 black-text">Логотип</span>
+            </div>
+            @if (!string.IsNullOrEmpty(Model.CustomerCompanyLogoAsString))
+            {
+                <div class="project-block-logo-image">
+                    <img class="project-logo-image" src="@Model.CustomerCompanyLogoAsString" alt="logo" />
+                </div>
+            }
+            <div class="project-block-insert-image">
+                <input class="input-image" type="file" accept="image/jpeg,image/png" name="project.CustomerCompanyLogoAsFormFile" />
+            </div>
+            <div class="label-prompt">
+                <span class="large-text font-family-2 black-text">Ссылка</span>
+            </div>
+            <div class="project-block-link">
+                <input class="text font-family-2 project-input-text-title" type="text" name="project.LinkToCustomerSite" value="@Model.LinkToCustomerSite" />
+            </div>
+        </div>
+    </div>
+    <div class="project-published-block">
+        @if (Model.IsPublished)
+        {
+            <input id="IsProjectPublished" class="select-point" type="checkbox" name="project.IsPublished" value="true" checked />
+        }
+        else
+        {
+            <input id="IsProjectPublished" class="select-point" type="checkbox" name="project.IsPublished" value="true" />
+        }
+        <label class="middle-text font-family-2 black-text" for="IsProjectPublished">&#10084; Опубликовать проект</label>
+    </div>
+</div>

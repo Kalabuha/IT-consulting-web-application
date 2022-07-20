@@ -7,7 +7,9 @@ namespace Services.Extensions
     {
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
-            services.AddScoped<IDataValidationService, DataValidationService>();
+            services.AddScoped<IProjectDataValidationService, ProjectDataValidationService>();
+            services.AddScoped<IApplicationDataValidationService, ApplicationDataValidationService>();
+
             services.AddScoped<IHeaderService, HeaderService>();
             services.AddScoped<IMainPageService, MainPageService>();
 

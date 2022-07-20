@@ -40,7 +40,7 @@ namespace Services
             randomHeaderSlogan ??= new HeaderSloganEntity
             {
                 Id = 0,
-                Slogan = await GetDefaultTextFromFile("slogan.txt"),
+                Slogan = await GetDefaultTextFromFileAsync("slogan.txt"),
                 IsUsed = true
             };
 

@@ -21,8 +21,8 @@ namespace Services.Converters
             return new ServiceEntity
             {
                 Id = model.Id,
-                Title = DataConverter.CutTextByParameter(model.ServiceName, 150),
-                ServiceDescription = DataConverter.CutTextByParameter(model.ServiceDescription, 1500),
+                Title = DataConverter.CutTextByParameterIfNullReturnEmpty(model.ServiceName, 150),
+                ServiceDescription = DataConverter.CutTextByParameterIfNullReturnEmpty(model.ServiceDescription, 1500),
                 IsPublished = true
             };
         }

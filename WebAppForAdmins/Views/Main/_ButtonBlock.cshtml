@@ -1,0 +1,22 @@
+﻿@model MainPageButtonModel?
+
+@{
+    string buttonContent;
+    string buttonAvailableOrNotStyleClass;
+}
+
+@if (Model != null && !string.IsNullOrEmpty(Model.Button))
+{
+    buttonContent = Model.Button;
+    buttonAvailableOrNotStyleClass = "preset-button-shell-button-available";
+
+}
+else
+{
+    buttonContent = "Кнопка отсутствует";
+    buttonAvailableOrNotStyleClass = "preset-button-shell-button-not-available";
+}
+
+<div class="preset-button-shell @buttonAvailableOrNotStyleClass">
+    <span class="preset-button-content biggest-text font-family-2 white-text">@buttonContent</span>
+</div>

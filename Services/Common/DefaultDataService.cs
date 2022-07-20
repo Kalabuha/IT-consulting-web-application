@@ -5,8 +5,9 @@ namespace Services.Common
     public abstract class DefaultDataService
     {
         protected readonly string _directoryDefaultTextFiles = @"..\Services\Common\DefaultData\txt";
+        protected readonly string _directoryDefaultImageFiles = @"..\Services\Common\DefaultData\img";
 
-        protected async Task<string> GetDefaultTextFromFile(string nameTxtFile)
+        protected async Task<string> GetDefaultTextFromFileAsync(string nameTxtFile)
         {
             string defaultString = string.Empty;
 
@@ -28,5 +29,13 @@ namespace Services.Common
 
             return defaultString;
         }
+
+        protected string GetDefaultImageFromFile(string nameImgFile)
+        {
+            var pathToImageFile = Path.Combine(_directoryDefaultImageFiles, nameImgFile);
+
+            return pathToImageFile;
+        }
+
     }
 }

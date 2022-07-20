@@ -5,7 +5,7 @@ using Resources.Models;
 
 namespace Services
 {
-    internal class DataValidationService : IDataValidationService
+    internal class ApplicationDataValidationService : IApplicationDataValidationService
     {
         const int LowerNameLengthLimit = 3;
         const int UpperNameLengthLimit = 60;
@@ -32,19 +32,19 @@ namespace Services
             };
         }
 
-        private string? GetErrorMessageInName(DataValidationResult nameValidationCheckResult)
+        private string? GetErrorMessageInName(ApplicationDataValidationResult nameValidationCheckResult)
         {
             switch (nameValidationCheckResult)
             {
-                case DataValidationResult.NameIsEmpty:
+                case ApplicationDataValidationResult.NameIsEmpty:
                     return "Поле с вашим именем не заполнено";
-                case DataValidationResult.NameIsTooShort:
+                case ApplicationDataValidationResult.NameIsTooShort:
                     return $"Имя должно быть не короче {LowerNameLengthLimit} символов";
-                case DataValidationResult.NameIsTooLong:
+                case ApplicationDataValidationResult.NameIsTooLong:
                     return $"Имя должно быть не длиннее {UpperNameLengthLimit} символов";
-                case DataValidationResult.NameContainsInvalidCharacters:
+                case ApplicationDataValidationResult.NameContainsInvalidCharacters:
                     return "Имя должно содержать только буквенные символы";
-                case DataValidationResult.NamePassedValidationCheck:
+                case ApplicationDataValidationResult.NamePassedValidationCheck:
                     return null;
 
                 default:
@@ -52,19 +52,19 @@ namespace Services
             }
         }
 
-        private string? GetErrorMessageInEmail(DataValidationResult emailValidationCheckResult)
+        private string? GetErrorMessageInEmail(ApplicationDataValidationResult emailValidationCheckResult)
         {
             switch (emailValidationCheckResult)
             {
-                case DataValidationResult.EmailIsEmpty:
+                case ApplicationDataValidationResult.EmailIsEmpty:
                     return "Поле с вашим e-mail не заполнено";
-                case DataValidationResult.EmailIsTooShort:
+                case ApplicationDataValidationResult.EmailIsTooShort:
                     return $"Допускается не менее {LowerEmailLengthLimit} символов";
-                case DataValidationResult.EmailIsTooLong:
+                case ApplicationDataValidationResult.EmailIsTooLong:
                     return $"Допускается не более {UpperEmailLengthLimit} символов";
-                case DataValidationResult.EmailInvalidFirstCharacter:
+                case ApplicationDataValidationResult.EmailInvalidFirstCharacter:
                     return "Не допускается вводить спец. символ в начале e-mail";
-                case DataValidationResult.EmailPassedValidationCheck:
+                case ApplicationDataValidationResult.EmailPassedValidationCheck:
                     return null;
 
                 default:
@@ -72,17 +72,17 @@ namespace Services
             }
         }
 
-        private string? GetErrorMessageInMessage(DataValidationResult messageValidationCheckResult)
+        private string? GetErrorMessageInMessage(ApplicationDataValidationResult messageValidationCheckResult)
         {
             switch (messageValidationCheckResult)
             {
-                case DataValidationResult.MessageIsEmpty:
+                case ApplicationDataValidationResult.MessageIsEmpty:
                     return "Поле с сообщением не заполнено";
-                case DataValidationResult.MessageIsTooShort:
+                case ApplicationDataValidationResult.MessageIsTooShort:
                     return $"Вы ввели слишком короткое сообщение. Допускается не менее {LowerMessageLengthLimit} символов";
-                case DataValidationResult.MessageIsTooLong:
+                case ApplicationDataValidationResult.MessageIsTooLong:
                     return $"Вы ввели слишком длинное сообщение. Допускается не более {UpperMessageLengthLimit} символов";
-                case DataValidationResult.MessagePassedValidationCheck:
+                case ApplicationDataValidationResult.MessagePassedValidationCheck:
                     return null;
 
                 default:
@@ -90,74 +90,74 @@ namespace Services
             }
         }
 
-        private DataValidationResult NameValidationCheck(string? name)
+        private ApplicationDataValidationResult NameValidationCheck(string? name)
         {
             if (IsNullOrEmptyOrWhitespace(name))
             {
-                return DataValidationResult.NameIsEmpty;
+                return ApplicationDataValidationResult.NameIsEmpty;
             }
 
             var nameLength = name!.Length;
             if (nameLength < LowerNameLengthLimit)
             {
-                return DataValidationResult.NameIsTooShort;
+                return ApplicationDataValidationResult.NameIsTooShort;
             }
             else if (nameLength > UpperNameLengthLimit)
             {
-                return DataValidationResult.NameIsTooLong;
+                return ApplicationDataValidationResult.NameIsTooLong;
             }
 
             if (!IsAllCharIsLetters(name))
             {
-                return DataValidationResult.NameContainsInvalidCharacters;
+                return ApplicationDataValidationResult.NameContainsInvalidCharacters;
             }
 
-            return DataValidationResult.NamePassedValidationCheck;
+            return ApplicationDataValidationResult.NamePassedValidationCheck;
         }
 
-        private DataValidationResult EmailValidationCheck(string? email)
+        private ApplicationDataValidationResult EmailValidationCheck(string? email)
         {
             if (IsNullOrEmptyOrWhitespace(email))
             {
-                return DataValidationResult.EmailIsEmpty;
+                return ApplicationDataValidationResult.EmailIsEmpty;
             }
 
             var emailLength = email!.Length;
             if (emailLength < LowerEmailLengthLimit)
             {
-                return DataValidationResult.EmailIsTooShort;
+                return ApplicationDataValidationResult.EmailIsTooShort;
             }
             else if (emailLength > UpperEmailLengthLimit)
             {
-                return DataValidationResult.EmailIsTooLong;
+                return ApplicationDataValidationResult.EmailIsTooLong;
             }
 
             if (!IsFirstCharIsLetters(email))
             {
-                return DataValidationResult.EmailInvalidFirstCharacter;
+                return ApplicationDataValidationResult.EmailInvalidFirstCharacter;
             }
 
-            return DataValidationResult.EmailPassedValidationCheck;
+            return ApplicationDataValidationResult.EmailPassedValidationCheck;
         }
 
-        private DataValidationResult MessageValidationCheck(string? message)
+        private ApplicationDataValidationResult MessageValidationCheck(string? message)
         {
             if (IsNullOrEmptyOrWhitespace(message))
             {
-                return DataValidationResult.MessageIsEmpty;
+                return ApplicationDataValidationResult.MessageIsEmpty;
             }
 
             var messageLength = message!.Length;
             if (messageLength < LowerMessageLengthLimit)
             {
-                return DataValidationResult.MessageIsTooShort;
+                return ApplicationDataValidationResult.MessageIsTooShort;
             }
             else if (messageLength > UpperMessageLengthLimit)
             {
-                return DataValidationResult.MessageIsTooLong;
+                return ApplicationDataValidationResult.MessageIsTooLong;
             }
 
-            return DataValidationResult.MessagePassedValidationCheck;
+            return ApplicationDataValidationResult.MessagePassedValidationCheck;
         }
 
         private bool IsNullOrEmptyOrWhitespace(string? input)

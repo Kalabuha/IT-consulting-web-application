@@ -1,29 +1,26 @@
 ﻿using Resources.Models;
-using Resources.Containers;
+using Resources.Models.Base;
 
 namespace Services.Interfaces
 {
     public interface IMainPageService
     {
-        public Task<List<PresetInfo>> GetAllPresetInfosAsync();
-        public Task<PresetInfo?> GetPublishedPresetInfoAsync();
-        public Task<PresetInfo?> GetPresetInfoByIdAsync(int presetId);
+        public Task<List<MainPagePresetModel>> GetAllPresetModelsAsync();
+        public Task<MainPagePresetModel?> GetPublishedPresetModelAsync();
+        public Task<MainPagePresetModel?> GetPresetModelByIdAsync(int id);
+        public MainPagePresetModel GetDefaultPresetModelAsync();
+        public Task PublishPreset(int id);
 
-        public Task<List<MainPageModel>> GetAllMainPageModelsAsync();
-        public Task<MainPageModel?> GetPublishedMainPageModelAsync();
-        public Task<MainPageModel?> GetMainPageModelByIdAsync(int presetId);
-        public Task<MainPageModel> GetDefaultMainPageModelAsync();
+        public Task<int> CreatePreset(MainPagePresetModel model);
+        public Task UpdatePreset(MainPagePresetModel model);
+        public Task DeletePreset(MainPagePresetModel model);
 
-        public Task<MainPageAllDataContainer> GetMainPageAllData();
+        public Task<MainPageTModel?> GetElementModelByIdAsync<MainPageTModel>(int id) where MainPageTModel : BaseModel;
+        public Task<MainPageTModel?> GetElementModelByPresetIdAsync<MainPageTModel>(int id) where MainPageTModel : BaseModel;
+        public Task<List<MainPageTModel>> GetAllElementModelsAsync<MainPageTModel>() where MainPageTModel : BaseModel;
 
-        //Preset
-        public Task PublishPreset(int presetId);
-        public Task DeletePreset(int presetId);
-        public Task<int> CreatePreset(string presetName);
-
-        //PresetElements
-        public Task ChangePresetElement(int presetId, int elementId, Type modelType);
-        public Task TryDeletePresetElement(int elementId, Type modelType);
+        public Task<MainPageTextModel> GetDefaultMainPageTextModel();
+        public Task<MainPageActionModel> GetDefaultMainPageActionModel();
 
     }
 }

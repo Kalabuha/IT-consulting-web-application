@@ -14,7 +14,7 @@ namespace Services.Converters
                 Postcode = entity.Postcode,
                 Phone = entity.Phone,
                 Fax = entity.Fax,
-                MapAsString = DataConverter.Array64ToString(entity.MapAsArray64),
+                MapAsString = DataConverter.Array64ToDataImageString(entity.MapAsArray64),
             };
         }
 

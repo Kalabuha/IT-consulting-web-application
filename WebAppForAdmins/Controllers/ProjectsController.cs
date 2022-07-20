@@ -1,83 +1,143 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using WebAppForAdmins.Models;
+using Services.Interfaces;
+using Services.Converters;
+using Resources.Models;
 
 namespace WebAppForAdmins.Controllers
 {
     public class ProjectsController : Controller
     {
+        private readonly IProjectService _projectService;
+        private readonly IProjectDataValidationService _projectDataValidationService;
+
+        public ProjectsController(IProjectService projectService, IProjectDataValidationService projectDataValidationService)
+        {
+            _projectService = projectService;
+            _projectDataValidationService = projectDataValidationService;
+        }
+
         // GET: ProjectsController
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var viewModel = new ProjectsViewModel()
+            {
+                Projects = await _projectService.GetAllProjectModelsAsync()
+            };
+
+            return View(viewModel);
         }
 
-        // GET: ProjectsController/Details/5
-        public ActionResult Details(int id)
+        [HttpGet]
+        public IActionResult Create(ProjectModel project)
         {
-            return View();
+            return View(project);
         }
 
-        // GET: ProjectsController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: ProjectsController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> CreatePost(ProjectModel project)
         {
-            try
+            if (project.CustomerCompanyLogoAsFormFile != null)
+            {
+                project.CustomerCompanyLogoAsString = ReadBytesFromFormFile(project.CustomerCompanyLogoAsFormFile);
+            }
+
+            var projectDataValidationResult = _projectDataValidationService.GetProjectValidationResult(project);
+
+            if (projectDataValidationResult.IsDataNotVerified)
+            {
+                project.ProjectTitleValidationMessage = projectDataValidationResult.TitleValidError;
+                project.ProjectDescriptionValidationMessage = projectDataValidationResult.DescriptionValidError;
+
+                return RedirectToAction(nameof(Create), project);
+            }
+
+            await _projectService.AddProjectToDbAsync(project);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(ProjectModel project)
+        {
+            if (project.ProjectTitle == null && project.ProjectTitleValidationMessage == null ||
+                project.ProjectDescription == null && project.ProjectDescriptionValidationMessage == null)
+            {
+                var editableProject = await _projectService.GetProjectByIdAsync(project.Id);
+                if (editableProject == null)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+
+                return View(editableProject);
+            }
+
+            if (project.CustomerCompanyLogoAsFormFile != null)
+            {
+                project.CustomerCompanyLogoAsString = ReadBytesFromFormFile(project.CustomerCompanyLogoAsFormFile);
+            }
+
+            // oldProjectFromDb - просто для проверки - не пропал ли проект из БД, пока пользователь вносил изменения.
+            var oldProjectFromDb = await _projectService.GetProjectByIdAsync(project.Id);
+            if (oldProjectFromDb != null)
+            {
+                return View(project);
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditPost(ProjectModel project)
+        {
+            var projectDataValidationResult = _projectDataValidationService.GetProjectValidationResult(project);
+
+            if (projectDataValidationResult.IsDataNotVerified)
+            {
+                project.ProjectTitleValidationMessage = projectDataValidationResult.TitleValidError;
+                project.ProjectDescriptionValidationMessage = projectDataValidationResult.DescriptionValidError;
+
+                return RedirectToAction(nameof(Edit), project);
+            }
+
+            await _projectService.EditProjectToDbAsync(project);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(ProjectModel project)
+        {
+            var removableProject = await _projectService.GetProjectByIdAsync(project.Id);
+            if (removableProject == null)
             {
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+
+            return View(removableProject);
         }
 
-        // GET: ProjectsController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: ProjectsController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> DeletePost(ProjectModel project)
         {
-            try
+            var removableProject = await _projectService.GetProjectByIdAsync(project.Id);
+            if (removableProject != null)
             {
-                return RedirectToAction(nameof(Index));
+                await _projectService.RemoveProjectToDbAsync(removableProject);
             }
-            catch
-            {
-                return View();
-            }
+
+            return RedirectToAction(nameof(Index));
         }
 
-        // GET: ProjectsController/Delete/5
-        public ActionResult Delete(int id)
+        private string ReadBytesFromFormFile(IFormFile formFile)
         {
-            return View();
-        }
+            byte[] imageData;
+            using (var binaryReader = new BinaryReader(formFile.OpenReadStream()))
+            {
+                imageData = binaryReader.ReadBytes((int)formFile.Length);
+            }
 
-        // POST: ProjectsController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return DataConverter.Array64ToDataImageString(imageData);
         }
     }
 }

@@ -1,0 +1,37 @@
+﻿@model MainPageTextModel?
+
+@if (Model != null && !string.IsNullOrEmpty(Model.Text))
+{
+    <div class="content-block-small-indent preset-content-block-text-available">
+        <p class="middle-text font-family-2 black-text paragraph">@Model.Text</p>
+    </div>
+}
+else
+{
+    <div class="content-block-small-indent">
+        <p class="middle-text font-family-2 gold-text paragraph">
+            Если текст отсутствует блок отображаться не будет. Чтобы отобразить этот блок добавьте текст.
+        </p>
+    </div>
+
+    <div class="content-block-small-indent preset-content-block-text-not-available">
+        <span class="large-text font-family-2 white-text">Текст отсутствует</span>
+    </div>
+}
+
+@*Изменение текста*@
+<div class="content-block-standart-indent">
+    <div class="buttons-panel">
+        <div class="buttons-panel-block x-expandable">
+            <button class="button high-button button-max-width x-expand" type="button">
+                <span class="large-text font-family-2 black-text">Изменить блок текста</span>
+            </button>
+            <div class="select x-expandable-block">
+                <div class="select-block select-block-height-2 scroll-y-block">
+                </div>
+                <div class="block-select-preset-button-block">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

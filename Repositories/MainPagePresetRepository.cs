@@ -18,6 +18,15 @@ namespace Repositories
             return presets;
         }
 
+        public async Task<MainPagePresetEntity[]> GetAllPublishedPresetEntityAsync()
+        {
+            var presets = await Context.MainPagePresets
+                .Where(p => p.IsPublishedOnMainPage == true)
+                .ToArrayAsync();
+
+            return presets;
+        }
+
         public async Task<MainPagePresetEntity?> GetPublishedMainPagePresetEntityAsync()
         {
             var publishedPreset = await Context.MainPagePresets

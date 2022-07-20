@@ -11,7 +11,7 @@ namespace WebAppForGuests.Controllers
         private readonly ILogger<MainController> _logger;
         private readonly IMainPageService _mainPageService;
         private readonly IApplicationService _applicationService;
-        private readonly IDataValidationService _dataValidationService;
+        private readonly IApplicationDataValidationService _dataValidationService;
         private readonly IHeaderService _headerService;
 
 
@@ -19,7 +19,7 @@ namespace WebAppForGuests.Controllers
             ILogger<MainController> logger,
             IMainPageService mainPageService,
             IApplicationService applicationService,
-            IDataValidationService dataValidationService,
+            IApplicationDataValidationService dataValidationService,
             IHeaderService headerService)
         {
             _logger = logger;
@@ -35,7 +35,7 @@ namespace WebAppForGuests.Controllers
             var headerModel = await _headerService.GetPublishedHeaderModelAsync();
             ViewBag.PageH1 = headerModel.Main;
 
-            var mainPageModel = await _mainPageService.GetPublishedMainPageModelAsync();
+            var mainPageModel = await _mainPageService.GetPublishedPresetModelAsync();
             ViewBag.MainPageModel = mainPageModel;
 
             if (applicationValidationResult == null)

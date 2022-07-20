@@ -32,31 +32,7 @@
             success: function(response) {
                 $("#RequestFilterResult").html(response);
             }
-        });
-
-        $(".buttons-panel-block").on("click", ".applications-button-select-statuses", function(e) {
-            var collapsable = $(this).closest(".buttons-panel-block");
-            if(collapsable.hasClass("expanded"))
-            {
-                collapsable.removeClass("expanded");
-            }
-            else
-            {
-                collapsable.addClass("expanded");
-            }
-        });
-
-        $(".buttons-panel-block").on("click", ".applications-button-select-periods", function(e) {
-            var collapsable = $(this).closest(".buttons-panel-block");
-            if(collapsable.hasClass("expanded"))
-            {
-                collapsable.removeClass("expanded");
-            }
-            else
-            {
-                collapsable.addClass("expanded");
-            }
-        });
+        });       
     });
 </script>
 }

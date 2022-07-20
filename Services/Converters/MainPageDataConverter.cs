@@ -5,6 +5,38 @@ namespace Services.Converters
 {
     public static class MainPageDataConverter
     {
+        public static MainPagePresetModel MainPagePresetEntityToModel(this MainPagePresetEntity entity)
+        {
+            return new MainPagePresetModel
+            {
+                Id = entity.Id,
+                PresetName = entity.PresetName,
+                IsPublished = entity.IsPublishedOnMainPage,
+
+                ActionId = entity.ActionId,
+                ButtonId = entity.ButtonId,
+                ImageId = entity.ImageId,
+                PhraseId = entity.PhraseId,
+                TextId = entity.TextId
+            };
+        }
+
+        public static MainPagePresetEntity MainPagePresetModelToEntity(this MainPagePresetModel model)
+        {
+            return new MainPagePresetEntity
+            {
+                Id = model.Id,
+                PresetName = model.PresetName,
+                IsPublishedOnMainPage = model.IsPublished,
+
+                ActionId = model.ActionId,
+                ButtonId = model.ButtonId,
+                ImageId = model.ImageId,
+                PhraseId = model.PhraseId,
+                TextId = model.TextId
+            };
+        }
+
         public static MainPageActionModel ActionEntityToModel(this MainPageActionEntity entity)
         {
             return new MainPageActionModel
@@ -19,7 +51,7 @@ namespace Services.Converters
             return new MainPageActionEntity
             {
                 Id = model.Id,
-                Action = DataConverter.CutTextByParameter(model.Action, 60),
+                Action = DataConverter.CutTextByParameterIfNullReturnEmpty(model.Action, 60),
             };
         }
 
@@ -37,7 +69,7 @@ namespace Services.Converters
             return new MainPageButtonEntity
             {
                 Id = model.Id,
-                Button = DataConverter.CutTextByParameter(model.Button, 16),
+                Button = DataConverter.CutTextByParameterIfNullReturnEmpty(model.Button, 16),
             };
         }
 
@@ -46,7 +78,7 @@ namespace Services.Converters
             return new MainPageImageModel
             {
                 Id = entity.Id,
-                Image = DataConverter.Array64ToString(entity.ImageAsArray64),
+                Image = DataConverter.Array64ToDataImageString(entity.ImageAsArray64),
             };
         }
 
@@ -73,7 +105,7 @@ namespace Services.Converters
             return new MainPagePhraseEntity
             {
                 Id = model.Id,
-                Phrase = DataConverter.CutTextByParameter(model.Phrase, 44),
+                Phrase = DataConverter.CutTextByParameterIfNullReturnEmpty(model.Phrase, 44),
             };
         }
 
@@ -91,7 +123,7 @@ namespace Services.Converters
             return new MainPageTextEntity
             {
                 Id = model.Id,
-                Text = DataConverter.CutTextByParameter(model.Text, 4000),
+                Text = DataConverter.CutTextByParameterIfNullReturnEmpty(model.Text, 4000),
             };
         }
     }

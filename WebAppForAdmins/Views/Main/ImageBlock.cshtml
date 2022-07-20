@@ -1,0 +1,76 @@
+﻿@model MainPageImageBlockModel
+
+@{
+    string imageAvailableOrNotStyleClass;
+    string displayBlockOrNoneStyle;
+}
+
+@if (!string.IsNullOrEmpty(Model?.ImageModel?.Image))
+{
+    imageAvailableOrNotStyleClass = "preset-content-img-image-available";
+    displayBlockOrNoneStyle = "display: none;";
+}
+else
+{
+    imageAvailableOrNotStyleClass = "preset-content-img-image-not-available";
+    displayBlockOrNoneStyle = "";
+
+    <div class="content-block-small-indent">
+        <p class="middle-text font-family-2 gold-text paragraph">
+            Если изображение отсутствует, элементы внутни него отображаться на&nbsp;странице сайта не&nbsp;будут,
+            как и&nbsp;весь блок целиком. Если вам необходимо сделать так, чтобы блок и внутренние элементы
+            отображались, добавтье изображение.
+        </p>
+    </div>
+}
+
+<div class="content-block-small-indent preset-content-img @imageAvailableOrNotStyleClass" style="background-image: url('@Model?.ImageModel?.Image');">
+    <div class="preset-content-img-button-block">
+        <partial name="_ButtonBlock" model="@Model.ButtonModel"/>
+    </div>
+
+    <div class="preset-content-img-image-missing-block" style="@displayBlockOrNoneStyle">
+        <span class="biggest-text font-family-2 white-text">Изображение отсутствует</span>
+    </div>
+
+    <div class="preset-content-img-phrase-block">
+        <partial name="_PhraseBlock" model="@Model.PhraseModel"/>
+    </div>
+</div>
+
+<div class="content-block-standart-indent">
+    <div class="buttons-panel">
+        <div class="buttons-panel-block x-expandable">
+            <button class="button high-button button-max-width x-expand" type="button">
+                <span class="large-text font-family-2 black-text">Изменить блок изображения</span>
+            </button>
+            <div class="select select-block x-expandable-block">
+                <div class="x-tabs">
+                    <div class="select-block-inner">
+                        <div class="buttons-panel-left">
+                            <button class="button low-button button-basis-1 x-activate x-active" type="button">
+                                <span class="large-text font-family-2 black-text">Изображение</span>
+                            </button>
+                            <button class="button low-button button-basis-1 x-activate" type="button">
+                                <span class="large-text font-family-2 black-text">Кнопка</span>
+                            </button>
+                            <button class="button low-button button-basis-1 x-activate" type="button">
+                                <span class="large-text font-family-2 black-text">Фраза</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="x-activatable x-active">
+                        <partial name="_ImageForm" model="@Model.ImageModel" />
+                    </div>
+                    <div class="x-activatable">
+                        <partial name="_ButtonForm" model="@Model.ButtonModel" />
+                    </div>
+                    <div class="x-activatable">
+                        <partial name="_PhraseForm" model="@Model.PhraseModel"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

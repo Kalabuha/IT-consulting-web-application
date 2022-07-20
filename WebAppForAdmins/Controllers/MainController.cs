@@ -18,113 +18,137 @@ namespace WebAppForAdmins.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(int? selectedPresetId)
+        public async Task<IActionResult> Index(int? id)
         {
-            MainPageModel? mainPageModel;
-            if (selectedPresetId.HasValue && selectedPresetId.Value > 0)
+            ViewBag.AllPresetModels = await _mainPageService.GetAllPresetModelsAsync();
+
+            MainPagePresetModel? preset;
+            if (id.HasValue && id.Value > 0)
             {
-                mainPageModel = await _mainPageService.GetMainPageModelByIdAsync(selectedPresetId.Value);
+                preset = await _mainPageService.GetPresetModelByIdAsync(id.Value);
             }
             else
             {
-                mainPageModel = await _mainPageService.GetPublishedMainPageModelAsync();
+                preset = await _mainPageService.GetPublishedPresetModelAsync();
             }
 
-            mainPageModel ??= await _mainPageService.GetDefaultMainPageModelAsync();
+            preset ??= _mainPageService.GetDefaultPresetModelAsync();
 
-            var presetInfos = await _mainPageService.GetAllPresetInfosAsync();
+            return View(preset);
+        }
 
-            var mainPageAllDataContainer = await _mainPageService.GetMainPageAllData();
+        [HttpPost]
+        public IActionResult SelectPreset(MainPagePresetModel preset)
+        {
+            return RedirectToAction(nameof(Index), new { id = preset.Id });
+        }
 
-            var mainViewModel = new MainViewModel()
+        [HttpPost]
+        public async Task<IActionResult> PublishSelectedPreset(MainPagePresetModel preset)
+        {
+            if (preset.Id > 0)
             {
-                MainPageModel = mainPageModel,
-                PresetInfos = presetInfos,
+                await _mainPageService.PublishPreset(preset.Id);
+            }
 
-                Actions = mainPageAllDataContainer.Actions,
-                Buttons = mainPageAllDataContainer.Buttons,
-                Images = mainPageAllDataContainer.Images,
-                Phrases = mainPageAllDataContainer.Phrases,
-                Texts = mainPageAllDataContainer.Texts,
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteSelectedPreset(MainPagePresetModel preset)
+        {
+            if (preset.Id > 0)
+            {
+                await _mainPageService.DeletePreset(preset);
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreatePreset(MainPagePresetModel preset)
+        {
+            if (string.IsNullOrEmpty(preset.PresetName) || string.IsNullOrWhiteSpace(preset.PresetName))
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            var id = await _mainPageService.CreatePreset(preset);
+
+            return RedirectToAction(nameof(Index), new { id });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ActionBlock(int id)
+        {
+            ViewBag.PresetId = id;
+
+            if (id > 0)
+            {
+                var action = await _mainPageService.GetElementModelByPresetIdAsync<MainPageActionModel>(id);
+                return PartialView(action);
+            }
+            else
+            {
+                var defaultActiont = await _mainPageService.GetDefaultMainPageActionModel();
+                return PartialView(defaultActiont);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ImageBlock(int id)
+        {
+            ViewBag.PresetId = id;
+
+            ViewBag.AllButtons = await _mainPageService.GetAllElementModelsAsync<MainPageButtonModel>();
+            ViewBag.AllImages = await _mainPageService.GetAllElementModelsAsync<MainPageImageModel>();
+            ViewBag.AllPhrases = await _mainPageService.GetAllElementModelsAsync<MainPagePhraseModel>();
+
+            var buttonModel = await _mainPageService.GetElementModelByPresetIdAsync<MainPageButtonModel>(id);
+            var imageModel = await _mainPageService.GetElementModelByPresetIdAsync<MainPageImageModel>(id);
+            var phraseModel = await _mainPageService.GetElementModelByPresetIdAsync<MainPagePhraseModel>(id);
+
+            var imageBlockModel = new MainPageImageBlockModel
+            {
+                ButtonModel = buttonModel,
+                ImageModel = imageModel,
+                PhraseModel = phraseModel
             };
 
-            return View(mainViewModel);
+            return PartialView(imageBlockModel);
         }
 
         [HttpPost]
-        public IActionResult ShowSelectedPreset(int presetId)
+        public async Task<IActionResult> SelectButtonForCurrentPreset(MainPageButtonModel model, int id)
         {
-            return RedirectToAction(nameof(Index), new { selectedPresetId = presetId });
-        }
+            ViewBag.PresetId = id;
 
-        [HttpPost]
-        public async Task<IActionResult> PublishSelectedPreset(int presetId)
-        {
-            if (presetId > 0)
+            var preset = await _mainPageService.GetPresetModelByIdAsync(id);
+            var buttonModel = await _mainPageService.GetElementModelByIdAsync<MainPageButtonModel>(model.Id);
+
+            if (preset != null && buttonModel != null)
             {
-                await _mainPageService.PublishPreset(presetId);
+                preset.ButtonId = buttonModel.Id;
+                await _mainPageService.UpdatePreset(preset);
             }
 
-            return RedirectToAction(nameof(Index));
+            return PartialView(buttonModel);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> DeleteSelectedPreset(int presetId)
+        [HttpGet]
+        public async Task<IActionResult> TextBlock(int id)
         {
-            if (presetId > 0)
+            ViewBag.PresetId = id;
+            if (id > 0)
             {
-                await _mainPageService.DeletePreset(presetId);
+                var mainPageTextModel = await _mainPageService.GetElementModelByPresetIdAsync<MainPageTextModel>(id);
+                return PartialView(mainPageTextModel);
             }
-
-            return RedirectToAction(nameof(Index));
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> CreateSelectedPreset(string presetName)
-        {
-            var newPresetId = await _mainPageService.CreatePreset(presetName);
-
-            return RedirectToAction(nameof(Index), new { selectedPresetId = newPresetId });
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> ActionForPresetElement(int presetId, int presetElementId, string action)
-        {
-            switch (action)
+            else
             {
-                case "select-text":
-                    await _mainPageService.ChangePresetElement(presetId, presetElementId, typeof(MainPageTextModel));
-                    break;
-                case "select-phrase":
-                    await _mainPageService.ChangePresetElement(presetId, presetElementId, typeof(MainPagePhraseModel));
-                    break;
-                case "select-button":
-                    await _mainPageService.ChangePresetElement(presetId, presetElementId, typeof(MainPageButtonModel));
-                    break;
-                case "select-image":
-                    await _mainPageService.ChangePresetElement(presetId, presetElementId, typeof(MainPageImageModel));
-                    break;
-                case "select-action":
-                    await _mainPageService.ChangePresetElement(presetId, presetElementId, typeof(MainPageActionModel));
-                    break;
-                case "delete-text":
-                    await _mainPageService.TryDeletePresetElement(presetElementId, typeof(MainPageTextModel));
-                    break;
-                case "delete-phrase":
-                    await _mainPageService.TryDeletePresetElement(presetElementId, typeof(MainPagePhraseModel));
-                    break;
-                case "delete-button":
-                    await _mainPageService.TryDeletePresetElement(presetElementId, typeof(MainPageButtonModel));
-                    break;
-                case "delete-image":
-                    await _mainPageService.TryDeletePresetElement(presetElementId, typeof(MainPageImageModel));
-                    break;
-                case "delete-action":
-                    await _mainPageService.TryDeletePresetElement(presetElementId, typeof(MainPageActionModel));
-                    break;
+                var DefaultMainPageTextModel = await _mainPageService.GetDefaultMainPageTextModel();
+                return PartialView(DefaultMainPageTextModel);
             }
-
-            return RedirectToAction(nameof(Index), new { selectedPresetId = presetId });
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

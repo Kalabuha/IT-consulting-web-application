@@ -1,0 +1,56 @@
+﻿@model MainPageActionModel?
+
+<div class="content-block-small-indent preset-content-block">
+    <div class="preset-input-block">
+        <div class="input-block-header">
+            @if (Model != null && !string.IsNullOrEmpty(Model.Action))
+            {
+                <span class="biggest-text font-family-2 black-text">@Model.Action</span>
+            }
+            else
+            {
+                <div class="preset-input-action-block-empty">
+                    <span class="biggest-text font-family-2 black-text">Призыв к действию отсутствует</span>
+                </div>
+            }
+        </div>
+        <div class="input-block-top">
+            <div class="input-block-top-item input-block-item">
+                <span class="input-block-label middle-text font-family-2 black-text">Имя</span>
+                <div class="input-block-field"></div>
+            </div>
+            <div class="input-block-top-item input-block-item">
+                <span class="input-block-label middle-text font-family-2 black-text">E-mail</span>
+                <div class="input-block-field"></div>
+            </div>
+        </div>
+        <div class="input-block-middle-item">
+            <div class="input-block-item">
+                <span class="input-block-label middle-text font-family-2 black-text">Текст сообщения</span>
+                <div class="input-block-field"></div>
+            </div>
+        </div>
+        <div class="preset-input-block-bottom">
+            <div class="input-block-button">
+                <span class="biggest-text font-family-2 white-text">Отправить</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Изменение призыва к действию*@
+<div class="content-block-small-indent">
+    <div class="buttons-panel">
+        <div class="buttons-panel-block x-expandable">
+            <button class="button high-button button-max-width x-expand" type="button">
+                <span class="large-text font-family-2 black-text">Изменить блок ввода</span>
+            </button>
+            <div class="select x-expandable-block">
+                <div class="select-block select-block-height-2 scroll-y-block">
+                </div>
+                <div class="block-select-preset-button-block">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

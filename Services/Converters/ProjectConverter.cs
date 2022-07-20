@@ -13,7 +13,8 @@ namespace Services.Converters
                 ProjectTitle = entity.Title,
                 LinkToCustomerSite = entity.LinkToCustomerSite ?? string.Empty,
                 ProjectDescription = entity.ProjectDescription,
-                CustomerCompanyLogoAsString = DataConverter.Array64ToString(entity.CustomerCompanyLogoAsArray64),
+                CustomerCompanyLogoAsString = DataConverter.Array64ToDataImageString(entity.CustomerCompanyLogoAsArray64),
+                IsPublished = entity.IsPublished
             };
         }
 
@@ -22,11 +23,11 @@ namespace Services.Converters
             return new ProjectEntity
             {
                 Id = model.Id,
-                Title = DataConverter.CutTextByParameter(model.ProjectTitle, 150),
-                LinkToCustomerSite = DataConverter.CutTextByParameter(model.LinkToCustomerSite, 300),
-                ProjectDescription = DataConverter.CutTextByParameter(model.ProjectDescription, 5000),
-                CustomerCompanyLogoAsArray64 = DataConverter.PathToImageToArray64(model.CustomerCompanyLogoAsString),
-                IsPublished = true
+                Title = model.ProjectTitle,
+                LinkToCustomerSite = string.IsNullOrEmpty(model.LinkToCustomerSite) ? null : model.LinkToCustomerSite,
+                ProjectDescription = model.ProjectDescription,
+                CustomerCompanyLogoAsArray64 = DataConverter.DataImageStringToArray64(model.CustomerCompanyLogoAsString),
+                IsPublished = model.IsPublished
             };
         }
     }

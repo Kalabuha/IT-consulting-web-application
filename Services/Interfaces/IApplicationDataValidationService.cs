@@ -3,7 +3,7 @@ using Services.ServiceResources;
 
 namespace Services.Interfaces
 {
-    public interface IDataValidationService
+    public interface IApplicationDataValidationService
     {
         public ApplicationValidationResult GetApplicationValidationResult(ApplicationModel application);
     }

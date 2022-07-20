@@ -1,0 +1,19 @@
+﻿@model MainPagePhraseModel?
+
+@{
+    string presetPhraseContent;
+    string presetPhraseContentStyles;
+}
+@if (Model != null && !string.IsNullOrEmpty(Model.Phrase))
+{
+    presetPhraseContent = Model.Phrase;
+    presetPhraseContentStyles = "";
+}
+else
+{
+    presetPhraseContent = "Фраза отсутствует";
+    presetPhraseContentStyles = "outline: 5px dashed #4e00a0;";
+}
+<div class="preset-phrase-shell" style="@presetPhraseContentStyles">
+    <span class="preset-phrase-content mega-text font-family-2 white-text">@presetPhraseContent</span>
+</div>

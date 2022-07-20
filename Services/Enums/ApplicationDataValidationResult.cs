@@ -1,6 +1,6 @@
 ﻿namespace Services.Enums
 {
-    public enum DataValidationResult : byte
+    public enum ApplicationDataValidationResult : byte
     {
         NameIsEmpty = 1,
         NameIsTooShort,

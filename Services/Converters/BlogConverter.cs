@@ -14,7 +14,7 @@ namespace Services.Converters
                 ShortBlogDescription = entity.ShortBlogDescription,
                 LongBlogDescription = entity.LongBlogDescription,
                 PublicationDate = entity.PublicationDate,
-                BlogImageAsString = DataConverter.Array64ToString(entity.BlogImageAsArray64)
+                BlogImageAsString = DataConverter.Array64ToDataImageString(entity.BlogImageAsArray64)
             };
         }
 
@@ -23,9 +23,9 @@ namespace Services.Converters
             return new BlogEntity
             {
                 Id = model.Id,
-                Title = DataConverter.CutTextByParameter(model.BlogTitle, 150),
-                ShortBlogDescription = DataConverter.CutTextByParameter(model.ShortBlogDescription, 500),
-                LongBlogDescription = DataConverter.CutTextByParameter(model.LongBlogDescription, 6000),
+                Title = DataConverter.CutTextByParameterIfNullReturnEmpty(model.BlogTitle, 150),
+                ShortBlogDescription = DataConverter.CutTextByParameterIfNullReturnEmpty(model.ShortBlogDescription, 500),
+                LongBlogDescription = DataConverter.CutTextByParameterIfNullReturnEmpty(model.LongBlogDescription, 6000),
                 PublicationDate = model.PublicationDate,
                 BlogImageAsArray64 = DataConverter.PathToImageToArray64(model.BlogImageAsString),
                 IsPublished = true,

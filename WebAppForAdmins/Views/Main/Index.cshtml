@@ -1,588 +1,203 @@
-﻿@model MainViewModel
+﻿@model MainPagePresetModel
 
 @{
     ViewData["Title"] = "Main";
 }
 
-<div class="container-content-common">
+<div id="containerContent" class="container-content-common">
     <div class="content-block-standart-indent">
         <h1 class="font-family-1 h1-standart-page gold-text">Главная</h1>
     </div>
 
-    @if (Model != null && Model.MainPageModel != null)
+    @*    <a class="middle-text bolder font-family-2 green-text" href="@Url.Action("ImageBlock", "Main", new { presetId = Model.Id })"
+        rel="modal:open">
+        Картинко!
+        </a>*@
+
+    <div class="content-block-standart-indent">
+        <div class="buttons-panel">
+            @*Выбрать пресет*@
+            <div class="buttons-panel-block x-expandable">
+                <form id="SelectPresetForm" asp-area="" asp-controller="Main" asp-action="SelectPreset" method="post">
+                    <button class="button high-button text-align-left button-max-width x-expand" type="button">
+                        <span class="large-text font-family-2 black-text">&#129095; Выбрать пресет</span>
+                    </button>
+                    <div class="select block-absolute-max-width x-expandable-block">
+                        <div class="select-block select-block-height scroll-x-y-block">
+                            @if (ViewBag.AllPresetModels != null && ViewBag.AllPresetModels.Count > 0)
+                            {
+                                <ul class="select-list">
+                                    @foreach (MainPagePresetModel presetModel in ViewBag.AllPresetModels)
+                                    {
+                                        var forLabelPresetId = $"preset-{presetModel.Id}";
+
+                                        <li class="select-list-item">
+                                            @if (presetModel.IsPublished)
+                                            {
+                                                <div class="select-list-item-block">
+                                                    <input class="select-point" type="radio" name="preset.Id" id="@forLabelPresetId" value="@presetModel.Id" checked />
+                                                    <label class="middle-text bolder font-family-2 green-text select-label" for="@forLabelPresetId">@presetModel.PresetName</label>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="select-list-item-block">
+                                                    <input class="select-point" type="radio" name="preset.Id" id="@forLabelPresetId" value="@presetModel.Id" />
+                                                    <label class="middle-text font-family-2 black-text select-label" for="@forLabelPresetId">@presetModel.PresetName</label>
+                                                </div>
+                                            }
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                        </div>
+                        <div class="block-select-preset-button-block">
+                            <button class="button low-button button-max-width" type="submit">
+                                <span class="large-text font-family-2 black-text">Подтвердить</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            @*Опубликовать пресет*@
+            <div class="buttons-panel-block">
+                <form id="CreatePresetForm" asp-area="" asp-controller="Main" asp-action="PublishSelectedPreset" method="post">
+                    <button class="button high-button text-align-left button-max-width" type="submit" name="preset.Id" value="@Model.Id">
+                        <span class="large-text font-family-2 black-text">&#10084; Опубликовать</span>
+                    </button>
+                </form>
+            </div>
+
+            @*Удалить пресет*@
+            <div class="buttons-panel-block x-expandable">
+                <form id="DeletePresetForm" asp-area="" asp-controller="Main" asp-action="DeleteSelectedPreset" method="post">
+                    <button class="button high-button text-align-left button-max-width x-expand" type="button">
+                        <span class="large-text font-family-2 black-text">&#10006; Удалить</span>
+                    </button>
+                    <div class="select block-absolute-max-width x-expandable-block">
+                        <div class="select-block select-block-height">
+                            <p class="text font-family-2 black-text paragraph">
+                                Вы уверены, что хотите удалить текущий пресет? При удалении данные, используемые этим
+                                пресетом, не удалятся. Чтобы удалить данные воспользуйтесь панелью кнопок
+                                соответствующих блоков данных.
+                            </p>
+                        </div>
+                        <div class="block-select-preset-button-block">
+                            <button class="button low-button button-max-width" type="submit" na>
+                                <span class="large-text font-family-2 black-text">Подтвердить</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            @*Создать пресет*@
+            <div class="buttons-panel-block x-expandable">
+                <form id="UpdatePresetForm" asp-area="" asp-controller="Main" asp-action="CreatePreset" method="post">
+                    <button class="button high-button text-align-left button-max-width x-expand" type="button">
+                        <span class="large-text font-family-2 black-text">&#9209; Создать</span>
+                    </button>
+                    <div class="select block-absolute-max-width x-expandable-block">
+                        <div class="select-block select-block-height">
+                            <div class="text-align-center content-block-inner">
+                                <span class="middle-text font-family-2 black-text">Введите название:</span>
+                            </div>
+                            <div class="text-align-center content-block-inner">
+                                <span class="text font-family-2 black-text">Не более 40 символов</span>
+                            </div>
+                            <textarea class="middle-text font-family-2 input-preset-name-textarea" name="preset.PresetName" ></textarea>
+                        </div>
+                        <div class="block-select-preset-button-block">
+                            <button class="button low-button button-max-width" type="submit">
+                                <span class="large-text font-family-2 black-text">Подтвердить</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-block-standart-indent">
+        <p class="middle-text font-family-2 gold-text paragraph">
+            На&nbsp;главной странице гостевого сайта отображается опубликованный пресет. Чтобы поменять его необходимо
+            выбрать другой пресет и&nbsp;нажать кнопку &laquo;Опубликовать&raquo;. Изменения&nbsp;же, которые вы&nbsp;
+            вносите в&nbsp;выбраном пресете, вступают в&nbsp;силу сразу для этого пресета, включая и&nbsp;опубликованный.
+            Поэтому для эксперементов лучше создать новый или использовать один из&nbsp;неопубликованных.
+        </p>
+    </div>
+
+    @if (Model.Id > 0)
     {
-        var mainPageModel = Model.MainPageModel;
-
         <div class="content-block-standart-indent">
-            <div class="buttons-panel">
-                @*Выбрать пресет*@
-                <div class="buttons-panel-block">
-                    <form id="SelectPresetForm" asp-area="" asp-controller="Main" asp-action="ShowSelectedPreset" method="post">
-                        <button class="button high-button button-text-left button-max-width main-button-select-preset" type="button">
-                            <span class="large-text font-family-2 black-text">&#129095; Выбрать пресет</span>
-                        </button>
-                        <div class="block-absolute-max-width block-select-preset-collapse">
-                            <div class="select-block select-block-height scroll-x-y-block">
-                                @if (Model.PresetInfos != null && Model.PresetInfos.Count > 0)
-                                {
-                                    var presetInfos = Model.PresetInfos;
-
-                                    <ul class="select-list">
-                                        @foreach (PresetInfo presetInfo in presetInfos)
-                                        {
-                                            <li class="select-list-item">
-                                                @if (presetInfo.IsPublished)
-                                                {
-                                                    <div class="select-list-item-block">
-                                                        <input class="select-point" type="radio" name="presetId" id="preset-@presetInfo.Id" value="@presetInfo.Id" checked />
-                                                        <label class="middle-text bolder font-family-2 green-text select-label" for="preset-@presetInfo.Id">@presetInfo.PresetName</label>
-                                                    </div>
-
-                                                }
-                                                else
-                                                {
-                                                    <div class="select-list-item-block">
-                                                        <input class="select-point" type="radio" name="presetId" id="preset-@presetInfo.Id" value="@presetInfo.Id" />
-                                                        <label class="middle-text font-family-2 black-text select-label" for="preset-@presetInfo.Id">@presetInfo.PresetName</label>
-                                                    </div>
-                                                }
-                                            </li>
-                                        }
-
-                                    </ul>
-                                }
-                            </div>
-                            <div class="block-select-preset-button-block">
-                                <button class="button high-button button-max-width select-preset-submit-button" type="submit">
-                                    <span class="large-text font-family-2 black-text">Подтвердить</span>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-                @*Опубликовать пресет*@
-                <div class="buttons-panel-block">
-                    <form id="CreatePresetForm" asp-area="" asp-controller="Main" asp-action="PublishSelectedPreset" asp-route-presetId="@mainPageModel.Id" method="post">
-                        <button class="button high-button button-text-left button-max-width main-button-create-preset" type="submit">
-                            <span class="large-text font-family-2 black-text">&#10084; Опубликовать</span>
-                        </button>
-                    </form>
-                </div>
-
-                @*Удалить пресет*@
-                <div class="buttons-panel-block">
-                    <form id="DeletePresetForm" asp-area="" asp-controller="Main" asp-action="DeleteSelectedPreset" asp-route-presetId="@mainPageModel.Id" method="post">
-                        <button class="button high-button button-text-left button-max-width main-button-delete-preset" type="button">
-                            <span class="large-text font-family-2 black-text">&#10006; Удалить</span>
-                        </button>
-                        <div class="block-absolute-max-width block-delete-preset-collapse">
-                            <div class="select-block select-block-height">
-                                <p class="text font-family-2 black-text paragraph">
-                                    Вы уверены, что хотите удалить текущий пресет? При удалении данные, используемые этим
-                                    пресетом, не удалятся. Чтобы удалить данные воспользуйтесь панелью кнопок
-                                    соответствующих блоков данных.
-                                </p>
-                            </div>
-                            <div class="block-select-preset-button-block">
-                                <button class="button high-button button-max-width select-preset-submit-button" type="submit">
-                                    <span class="large-text font-family-2 black-text">Подтвердить</span>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-                @*Создать пресет*@
-                <div class="buttons-panel-block">
-                    <form id="UpdatePresetForm" asp-area="" asp-controller="Main" asp-action="CreateSelectedPreset" method="post">
-                        <button class="button high-button button-text-left button-max-width main-button-create-preset" type="button">
-                            <span class="large-text font-family-2 black-text">&#9209; Создать</span>
-                        </button>
-                        <div class="block-absolute-max-width block-create-preset-collapse">
-                            <div class="select-block select-block-height">
-                                <div class="enter-preset-name-block">
-                                    <span class="middle-text font-family-2 black-text">Введите название:</span>
-                                </div>
-                                <div class="enter-preset-name-block">
-                                    <span class="text font-family-2 black-text">Не более 40 символов</span>
-                                </div>
-                                <textarea name="presetName" class="middle-text input-preset-name-textarea"></textarea>
-                            </div>
-                            <div class="block-select-preset-button-block">
-                                <button class="button high-button button-max-width select-preset-submit-button" type="submit">
-                                    <span class="large-text font-family-2 black-text">Подтвердить</span>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+            <h2 class="h2-standart-page font-family-1 gold-text">Название пресета: @Model.PresetName</h2>
         </div>
 
         <div class="content-block-standart-indent">
-            <p class="middle-text font-family-2 gold-text paragraph">
-                На&nbsp;главной странице гостевого сайта отображается опубликованный пресет. Чтобы поменять его необходимо
-                выбрать другой пресет и&nbsp;нажать кнопку &laquo;Опубликовать&raquo;. Изменения&nbsp;же, которые вы&nbsp;
-                вносите в&nbsp;выбраном пресете, вступают в&nbsp;силу сразу для этого пресета, включая и&nbsp;опубликованный. Поэтому для эксперементов лучше создать новый или использовать один из&nbsp;неопубликованных.
-            </p>
-        </div>
-
-        @if (mainPageModel.Id > 0)
-        {
-            <div class="content-block-standart-indent">
-                <h2 class="h2-standart-page font-family-1 gold-text">Название пресета: @mainPageModel.PresetName</h2>
-            </div>
-
-            <div class="content-block-standart-indent">
-                <div class="is-published-or-not-block">
-                    @if (mainPageModel.IsPublished)
-                    {
-                        <span class="biggest-text font-family-2 green-text">Опубликован</span>
-                    }
-                    else
-                    {
-                        <span class="biggest-text font-family-2 blue-text">Не опубликован</span>
-                    }
-                </div>
-            </div>
-        }
-        else
-        {
-            <div class="content-block-standart-indent">
-                <p class="middle-text font-family-2 gold-text paragraph">
-                    В&nbsp;данный момент нет ни&nbsp;одного опубликованного пресета. Используется пресет по&nbsp;умолчанию.
-                    Изменять пресет по&nbsp;умолчанию запрещено. Необходимо выбрать один из&nbsp;неопубликованных или создать новый.
-                    Для создания нового пресета нажмите кнопку &laquo;Создать&raquo;.
-                </p>
-            </div>
-            <div class="content-block-standart-indent">
-                <h2 class="h2-standart-page font-family-1 gold-text">@mainPageModel.PresetName</h2>
-            </div>
-        }
-
-@*        <div id="RequestMainPageTextResult">
-
-        </div>*@
-
-        if (!string.IsNullOrEmpty(@mainPageModel.Text))
-        {
-            <div class="content-block-small-indent preset-content-block">
-                <p class="middle-text font-family-2 black-text paragraph">@mainPageModel.Text</p>
-            </div>
-        }
-        else
-        {
-            <div class="content-block-small-indent">
-                <p class="middle-text font-family-2 gold-text paragraph">
-                    Если текст отсутствует блок отображаться не будет. Чтобы отобразить этот блок добавьте текст.
-                </p>
-            </div>
-            <div class="content-block-small-indent preset-text-content-block-empty">
-                <span class="biggest-text font-family-2 white-text">Текст отсутствует</span>
-            </div>
-        }
-
-        @*Изменение текста*@
-        <div class="content-block-standart-indent">
-            <div class="buttons-panel">
-                <div class="buttons-panel-block">
-                    <button class="button high-button button-max-width main-button-change-text-content" type="button">
-                        <span class="large-text font-family-2 black-text">Изменить блок текста</span>
-                    </button>
-                    <div class="block-change-text-content-collapse">
-                        <div class="select-block select-block-height-2 scroll-y-block">
-                        </div>
-                        <div class="block-select-preset-button-block">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        string presetContentImageStyle;
-        string presetContentMissingImageStyle;
-        if (!string.IsNullOrEmpty(@mainPageModel.Image))
-        {
-            presetContentImageStyle = "3px solid #4e00a0;";
-            presetContentMissingImageStyle = "display: none;";
-        }
-        else
-        {
-            presetContentImageStyle = "5px dashed #4e00a0;";
-            presetContentMissingImageStyle = "display: block;";
-
-            <div class="content-block-small-indent">
-                <p class="middle-text font-family-2 gold-text paragraph">
-                    Если изображение отсутствует, элементы внутни него отображаться на&nbsp;странице сайта не&nbsp;будут,
-                    как и&nbsp;весь блок целиком. Если вам необходимо сделать так, чтобы блок и внутренние элементы
-                    отображались, добавтье изображение.
-                </p>
-            </div>
-        }
-
-        <div class="content-block-small-indent preset-content-img" style="background-image: url('@mainPageModel.Image'); outline: @presetContentImageStyle">
-            @{
-                string presetButtonContent;
-                string presetButtonContentStyles;
-            }
-
-            @if (!string.IsNullOrEmpty(@mainPageModel.Button))
-            {
-                presetButtonContent = @mainPageModel.Button;
-                presetButtonContentStyles = "background-color: #e31776;";
-            }
-            else
-            {
-                presetButtonContent = "Кнопка отсутствует";
-                presetButtonContentStyles = "outline: 5px dashed #e31776;";
-            }
-
-            <div class="preset-content-img-button-block">
-                <div class="preset-button-shell" style="@presetButtonContentStyles">
-                    <span class="preset-button-content biggest-text font-family-2 white-text">@presetButtonContent</span>
-                </div>
-            </div>
-
-            <div class="preset-content-img-image-missing-block" style="@presetContentMissingImageStyle">
-                <span class="biggest-text font-family-2 white-text">Изображение отсутствует</span>
-            </div>
-
-            @{
-                string presetPhraseContent;
-                string presetPhraseContentStyles;
-            }
-            @if (!string.IsNullOrEmpty(@mainPageModel.Phrase))
-            {
-                presetPhraseContent = @mainPageModel.Phrase;
-                presetPhraseContentStyles = "";
-            }
-            else
-            {
-                presetPhraseContent = "Фраза отсутствует";
-                presetPhraseContentStyles = "outline: 5px dashed #4e00a0;";
-            }
-
-            <div class="preset-content-img-phrase-block">
-                <div class="preset-phrase-shell" style="@presetPhraseContentStyles">
-                    <span class="preset-phrase-content mega-text font-family-2 white-text">@presetPhraseContent</span>
-                </div>
-            </div>
-        </div>
-
-        @*Изменение изображения*@
-        <div class="content-block-standart-indent">
-            <div class="buttons-panel">
-                <div class="buttons-panel-block">
-                    <button class="button high-button button-max-width main-button-change-image-content" type="button">
-                        <span class="large-text font-family-2 black-text">Изменить блок изображения</span>
-                    </button>
-                    <div class="block-change-image-content-collapse">
-                        <div class="tabs select-block">
-                            <div class="buttons-panel-left">
-                                <button id="defaultOpen" class="button tab-navbar-item" type="button" onclick="openTab(event, 'TabImage')">
-                                    <span class="large-text font-family-2 black-text">Изображение</span>
-                                </button>
-                                <button class="button high-button tab-navbar-item" type="button" onclick="openTab(event, 'TabButton')">
-                                    <span class="large-text font-family-2 black-text">Кнопка</span>
-                                </button>
-                                <button class="button high-button tab-navbar-item" type="button" onclick="openTab(event, 'TabPhrase')">
-                                    <span class="large-text font-family-2 black-text">Фраза</span>
-                                </button>
-                            </div>
-                            <div class="select-block-inner-block">
-                                <div id="TabImage" class="tab-content-item">
-                                    <div class="tab-content-block">
-                                        <span class="middle-text font-family-2 black-text">Изменение изображения</span>
-                                    </div>
-                                </div>
-                                <div id="TabButton" class="tab-content-item">
-                                    <div class="tab-content-block">
-                                        <p class="text font-family-2 black-text paragraph">
-                                            Кнопку можно выбрать из списка или создать новую. Если кнопка используется одним из пресетов,
-                                            то её удаление будет прервано. Чтобы удалить кнопку, необходимо сначала убрать её из всех пресетов.
-                                        </p>
-                                    </div>
-                                    <form id="SelectButtonForm" asp-area="" asp-controller="Main" asp-action="ActionForPresetElement" asp-route-presetId="@mainPageModel.Id" method="post">
-                                        <div class="tab-content-block tab-content-select-block scroll-y-block">
-                                            @if (Model.Buttons != null)
-                                            {
-                                                int selectedButtonForCurrentPreset = 0;
-                                                @if (mainPageModel.ButtonId.HasValue)
-                                                {
-                                                    selectedButtonForCurrentPreset = mainPageModel.ButtonId.Value;
-                                                }
-
-                                                <ul class="select-list">
-                                                    @foreach (var button in Model.Buttons)
-                                                    {
-                                                        var labelForButtonId = $"button-{button.Id}";
-
-                                                        <li class="select-list-item">
-                                                            <div class="select-list-item-block">
-                                                                @if (button.Id == selectedButtonForCurrentPreset)
-                                                                {
-                                                                    <input class="select-point" type="radio" name="presetElementId" id="@labelForButtonId" value="@button.Id" checked />
-                                                                    <label class="text font-family-2 green-text bolder select-label" for="@labelForButtonId">@button.Button</label>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <input class="select-point" type="radio" name="presetElementId" id="@labelForButtonId" value="@button.Id" />
-                                                                    <label class="text font-family-2 black-text select-label" for="@labelForButtonId">@button.Button</label>
-                                                                }
-                                                            </div>
-                                                        </li>
-                                                    }
-                                                    <li class="select-list-item">
-                                                        <div class="select-list-item-block">
-                                                            <input class="select-point" type="radio" name="presetElementId" id="button-null" value="-1" />
-                                                            <label class="text font-family-2 blue-text bolder select-label" for="button-null">Убрать кнопку</label>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            }
-                                        </div>
-                                        <div class="buttons-panel-left">
-                                            <button class="button low-button button-width-1" type="submit" name="action" value="select-button">
-                                                <span class="middle-text font-family-2 black-text">&#10084; Выбрать</span>
-                                            </button>
-                                            <button class="button low-button button-width-1" type="submit" name="action" value="delete-button">
-                                                <span class="middle-text font-family-2 black-text">&#10006; Удалить</span>
-                                            </button>
-                                            <button class="button low-button button-width-1" type="submit" name="action" value="create">
-                                                <span class="middle-text font-family-2 black-text">&#9209; Создать</span>
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div id="TabPhrase" class="tab-content-item">
-                                    <div class="tab-content-block">
-                                        <p class="text font-family-2 black-text paragraph">
-                                            Фразу можно выбрать из списка или создать новую. Если фраза используется одним из пресетов,
-                                            то её удаление будет прервано. Чтобы удалить фразу, необходимо сначала убрать её из всех пресетов.
-                                        </p>
-                                    </div>
-                                    <form id="SelectPhraseForm" asp-area="" asp-controller="Main" asp-action="ActionForPresetElement" asp-route-presetId="@mainPageModel.Id" method="post">
-                                        <div class="tab-content-block tab-content-select-block scroll-y-block">
-                                            @if (Model.Phrases != null)
-                                            {
-                                                int selectedPhraseForCurrentPreset = 0;
-                                                @if (mainPageModel.PhraseId.HasValue)
-                                                {
-                                                    selectedPhraseForCurrentPreset = mainPageModel.PhraseId.Value;
-                                                }
-
-                                                <ul class="select-list">
-                                                    @foreach (var phrase in Model.Phrases)
-                                                    {
-                                                        var labelForPhraseId = $"phrase-{phrase.Id}";
-
-                                                        <li class="select-list-item">
-                                                            <div class="select-list-item-block">
-                                                                @if (phrase.Id == selectedPhraseForCurrentPreset)
-                                                                {
-                                                                    <input class="select-point" type="radio" name="presetElementId" id="@labelForPhraseId" value="@phrase.Id" checked />
-                                                                    <label class="text font-family-2 green-text bolder select-label" for="@labelForPhraseId">@phrase.Phrase</label>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <input class="select-point" type="radio" name="presetElementId" id="@labelForPhraseId" value="@phrase.Id" />
-                                                                    <label class="text font-family-2 black-text select-label" for="@labelForPhraseId">@phrase.Phrase</label>
-                                                                }
-                                                            </div>
-                                                        </li>
-                                                    }
-                                                    <li class="select-list-item">
-                                                        <div class="select-list-item-block">
-                                                            <input class="select-point" type="radio" name="presetElementId" id="phrase-null" value="-1" />
-                                                            <label class="text font-family-2 blue-text bolder select-label" for="phrase-null">Убрать фразу</label>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            }
-
-                                        </div>
-                                        <div class="buttons-panel-left">
-                                            <button class="button low-button button-width-1" type="submit" name="action" value="select-phrase">
-                                                <span class="middle-text font-family-2 black-text">&#10084; Выбрать</span>
-                                            </button>
-                                            <button class="button low-button button-width-1" type="submit" name="action" value="delete-phrase">
-                                                <span class="middle-text font-family-2 black-text">&#10006; Удалить</span>
-                                            </button>
-                                            <button class="button low-button button-width-1" type="submit" name="action" value="create-phrase">
-                                                <span class="middle-text font-family-2 black-text">&#9209; Создать</span>
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="content-block-small-indent preset-content-block">
-            <div class="preset-input-block">
-                <div class="input-block-header">
-                    @if (!string.IsNullOrEmpty(@mainPageModel.Action))
-                    {
-                        <span class="biggest-text font-family-2 black-text">@mainPageModel.Action</span>
-                    }
-                    else
-                    {
-                        <div class="preset-input-action-block-empty">
-                            <span class="biggest-text font-family-2 black-text">Призыв к действию отсутствует</span>
-                        </div>
-                    }
-                </div>
-                <div class="input-block-top">
-                    <div class="input-block-top-item input-block-item">
-                        <span class="input-block-label middle-text font-family-2 black-text">Имя</span>
-                        <div class="input-block-field"></div>
-                    </div>
-                    <div class="input-block-top-item input-block-item">
-                        <span class="input-block-label middle-text font-family-2 black-text">E-mail</span>
-                        <div class="input-block-field"></div>
-                    </div>
-                </div>
-                <div class="input-block-middle-item">
-                    <div class="input-block-item">
-                        <span class="input-block-label middle-text font-family-2 black-text">Текст сообщения</span>
-                        <div class="input-block-field"></div>
-                    </div>
-                </div>
-                <div class="preset-input-block-bottom">
-                    <div class="input-block-button">
-                        <span class="biggest-text font-family-2 white-text">Отправить</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        @*Изменение призыва к действию*@
-        <div class="content-block-small-indent">
-            <div class="buttons-panel">
-                <div class="buttons-panel-block">
-                    <button class="button high-button button-max-width main-button-change-action-content" type="button">
-                        <span class="large-text font-family-2 black-text">Изменить блок ввода</span>
-                    </button>
-                    <div class="block-change-action-content-collapse">
-                        <div class="select-block select-block-height-2 scroll-y-block">
-                        </div>
-                        <div class="block-select-preset-button-block">
-                        </div>
-                    </div>
-                </div>
+            <div class="is-published-or-not-block">
+                @if (Model.IsPublished)
+                {
+                    <span class="biggest-text font-family-2 green-text">Опубликован</span>
+                }
+                else
+                {
+                    <span class="biggest-text font-family-2 blue-text">Не опубликован</span>
+                }
             </div>
         </div>
     }
     else
     {
-        <div class="final-block">
-            <span class="biggest-text font-family-2 gold-text">
-                Что-то пошло не так. Попробуйте перезагрузить страницу. Если не помогло, значит всё...
-            </span>
+        <div class="content-block-standart-indent">
+            <p class="middle-text font-family-2 gold-text paragraph">
+                В&nbsp;данный момент нет ни&nbsp;одного опубликованного пресета. Используется пресет по&nbsp;умолчанию.
+                Изменять пресет по&nbsp;умолчанию запрещено. Необходимо выбрать один из&nbsp;неопубликованных или создать новый.
+                Для создания нового пресета нажмите кнопку &laquo;Создать&raquo;.
+            </p>
         </div>
-
-        <div class="final-block">
-            <img class="crash-image-robot" src="/img/objects/robot-2.png" alt="robot death" />
+        <div class="content-block-standart-indent">
+            <h2 class="h2-standart-page font-family-1 gold-text">@Model.PresetName</h2>
         </div>
     }
+
+    <div class="main-block x-reloadable"
+         data-load-action="@Url.Action("TextBlock", "Main", new { id = Model.Id })"></div>
+
+    <div class="main-block x-reloadable"
+         data-load-action="@Url.Action("ImageBlock", "Main", new { id = Model.Id })"></div>
+
+    <div class="main-block x-reloadable"
+         data-load-action="@Url.Action("ActionBlock", "Main", new { id = Model.Id })"></div>
 </div>
 
 @section Scripts
 {
 <script>
     $(function() {
-        $(".buttons-panel-block").on("click", ".main-button-select-preset", function(e) {
-            var collapsable = $(this).closest(".buttons-panel-block");
-            if(collapsable.hasClass("expanded"))
-            {
-                collapsable.removeClass("expanded");
-            }
-            else
-            {
-                collapsable.addClass("expanded");
-            }
-        });
+        $(".x-reloadable").each(function() {
+            var self = $(this);
 
-        $(".buttons-panel-block").on("click", ".main-button-delete-preset", function(e) {
-            var collapsable = $(this).closest(".buttons-panel-block");
-            if(collapsable.hasClass("expanded"))
-            {
-                collapsable.removeClass("expanded");
-            }
-            else
-            {
-                collapsable.addClass("expanded");
-            }
-        });
+            // перехват отправки форм из компонента
+            self.on("submit", function(e) {
+                // запретить браузеру самому отправлять форму
+                e.preventDefault();
 
-        $(".buttons-panel-block").on("click", ".main-button-create-preset", function(e) {
-            var collapsable = $(this).closest(".buttons-panel-block");
-            if(collapsable.hasClass("expanded"))
-            {
-                collapsable.removeClass("expanded");
-            }
-            else
-            {
-                collapsable.addClass("expanded");
-            }
-        });
+                // мы тут сами разберёмся с отправкой
+                $(this).ajaxSubmit({
+                    success: function(responseHtml) {
+                        self.html(responseHtml);
+                    }
+                });
 
-        $(".buttons-panel-block").on("click", ".main-button-change-text-content", function(e) {
-            var collapsable = $(this).closest(".buttons-panel-block");
-            if(collapsable.hasClass("expanded"))
-            {
-                collapsable.removeClass("expanded");
-            }
-            else
-            {
-                collapsable.addClass("expanded");
-            }
-        });
+                // запретить браузеру самому отправлять форму (альтернативно)
+                return false;
+            });
 
-        $(".buttons-panel-block").on("click", ".main-button-change-image-content", function(e) {
-            var collapsable = $(this).closest(".buttons-panel-block");
-            if(collapsable.hasClass("expanded"))
-            {
-                collapsable.removeClass("expanded");
-            }
-            else
-            {
-                collapsable.addClass("expanded");
-            }
-        });
-
-        $(".buttons-panel-block").on("click", ".main-button-change-action-content", function(e) {
-            var collapsable = $(this).closest(".buttons-panel-block");
-            if(collapsable.hasClass("expanded"))
-            {
-                collapsable.removeClass("expanded");
-            }
-            else
-            {
-                collapsable.addClass("expanded");
-            }
+            // загрузить кусок в div
+            var url = self.data("load-action");
+            self.load(url);
         });
     });
-
-    function openTab(evt, tabName) {
-        var i, tabContentItems, tabNavbarItems;
-        tabContentItems = document.getElementsByClassName("tab-content-item");
-        for (i = 0; i < tabContentItems.length; i++) {
-            tabContentItems[i].style.display = "none";
-        }
-
-        tabNavbarItems = document.getElementsByClassName("tab-navbar-item");
-        for (i = 0; i < tabNavbarItems.length; i++) {
-            tabNavbarItems[i].className = tabNavbarItems[i].className.replace(" active", "");
-        }
-        document.getElementById(tabName).style.display = "block";
-        evt.currentTarget.className += " active";
-    }
-
-    document.getElementById("defaultOpen").click();
 </script>
 }
