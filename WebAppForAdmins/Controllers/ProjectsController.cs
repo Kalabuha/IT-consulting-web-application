@@ -72,11 +72,6 @@ namespace WebAppForAdmins.Controllers
                 return View(editableProject);
             }
 
-            if (project.CustomerCompanyLogoAsFormFile != null)
-            {
-                project.CustomerCompanyLogoAsString = ReadBytesFromFormFile(project.CustomerCompanyLogoAsFormFile);
-            }
-
             // oldProjectFromDb - просто для проверки - не пропал ли проект из БД, пока пользователь вносил изменения.
             var oldProjectFromDb = await _projectService.GetProjectByIdAsync(project.Id);
             if (oldProjectFromDb != null)
@@ -100,6 +95,11 @@ namespace WebAppForAdmins.Controllers
                 return RedirectToAction(nameof(Edit), project);
             }
 
+            if (project.CustomerCompanyLogoAsFormFile != null)
+            {
+                project.CustomerCompanyLogoAsString = ReadBytesFromFormFile(project.CustomerCompanyLogoAsFormFile);
+            }
+
             await _projectService.EditProjectToDbAsync(project);
 
             return RedirectToAction(nameof(Index));
@@ -114,6 +114,7 @@ namespace WebAppForAdmins.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
+            ViewBag.IsChangeDisabled = true;
             return View(removableProject);
         }
 

@@ -1,14 +1,21 @@
 ﻿@model ProjectModel
 
 <input type="hidden" name="project.Id" value="@Model.Id" />
-<input type="hidden" name="project.CustomerCompanyLogoAsString" value="@Model.CustomerCompanyLogoAsString"/>
+<input type="hidden" name="project.CustomerCompanyLogoAsString" value="@Model.CustomerCompanyLogoAsString" />
 
 <div class="content-block-standart-indent preset-content-block">
     <div class="label-prompt">
         <span class="large-text font-family-2 black-text">Заголовок проекта</span>
     </div>
 
-    <textarea class="middle-text font-family-2 paragraph project-text-area-title" name="project.ProjectTitle" placeholder="Вводи заголовок сюда">@Model.ProjectTitle</textarea>
+    @if (ViewBag.IsChangeDisabled != null && ViewBag.IsChangeDisabled)
+    {
+        <textarea class="middle-text font-family-2 paragraph project-text-area-title" disabled name="project.ProjectTitle" placeholder="Вводи заголовок сюда">@Model.ProjectTitle</textarea>
+    }
+    else
+    {
+        <textarea class="middle-text font-family-2 paragraph project-text-area-title" name="project.ProjectTitle" placeholder="Вводи заголовок сюда">@Model.ProjectTitle</textarea>
+    }
 
     @if (!string.IsNullOrEmpty(Model.ProjectTitleValidationMessage))
     {
@@ -25,7 +32,14 @@
                 <span class="large-text font-family-2 black-text">Описание проекта</span>
             </div>
 
-            <textarea class="middle-text font-family-2 paragraph project-text-area-description" name="project.ProjectDescription" placeholder="Вводи описание сюда">@Model.ProjectDescription</textarea>
+            @if (ViewBag.IsChangeDisabled != null && ViewBag.IsChangeDisabled)
+            {
+                <textarea class="middle-text font-family-2 paragraph project-text-area-description" disabled name="project.ProjectDescription" placeholder="Вводи описание сюда">@Model.ProjectDescription</textarea>
+            }
+            else
+            {
+                <textarea class="middle-text font-family-2 paragraph project-text-area-description" name="project.ProjectDescription" placeholder="Вводи описание сюда">@Model.ProjectDescription</textarea>
+            }
 
             @if (!string.IsNullOrEmpty(Model.ProjectDescriptionValidationMessage))
             {
@@ -44,25 +58,51 @@
                     <img class="project-logo-image" src="@Model.CustomerCompanyLogoAsString" alt="logo" />
                 </div>
             }
-            <div class="project-block-insert-image">
-                <input class="input-image" type="file" accept="image/jpeg,image/png" name="project.CustomerCompanyLogoAsFormFile" />
-            </div>
+
+            @if (ViewBag.IsChangeDisabled == null || !ViewBag.IsChangeDisabled)
+            {
+                <div class="project-block-insert-image">
+                    <input class="input-image" type="file" accept="image/jpeg,image/png" name="project.CustomerCompanyLogoAsFormFile" />
+                </div>
+            }
+
             <div class="label-prompt">
                 <span class="large-text font-family-2 black-text">Ссылка</span>
             </div>
             <div class="project-block-link">
-                <input class="text font-family-2 project-input-text-title" type="text" name="project.LinkToCustomerSite" value="@Model.LinkToCustomerSite" />
+                @if (ViewBag.IsChangeDisabled != null && ViewBag.IsChangeDisabled)
+                {
+                    <input class="text font-family-2 project-input-text-title" type="text" disabled name="project.LinkToCustomerSite" value="@Model.LinkToCustomerSite" />
+                }
+                else
+                {
+                    <input class="text font-family-2 project-input-text-title" type="text" name="project.LinkToCustomerSite" value="@Model.LinkToCustomerSite" />
+                }
             </div>
         </div>
     </div>
     <div class="project-published-block">
-        @if (Model.IsPublished)
+        @if (ViewBag.IsChangeDisabled != null && ViewBag.IsChangeDisabled)
         {
-            <input id="IsProjectPublished" class="select-point" type="checkbox" name="project.IsPublished" value="true" checked />
+            @if (Model.IsPublished)
+            {
+                <input id="IsProjectPublished" class="select-point" disabled type="checkbox" name="project.IsPublished" value="true" checked />
+            }
+            else
+            {
+                <input id="IsProjectPublished" class="select-point" disabled type="checkbox" name="project.IsPublished" value="true" />
+            }
         }
         else
         {
-            <input id="IsProjectPublished" class="select-point" type="checkbox" name="project.IsPublished" value="true" />
+            @if (Model.IsPublished)
+            {
+                <input id="IsProjectPublished" class="select-point" type="checkbox" name="project.IsPublished" value="true" checked />
+            }
+            else
+            {
+                <input id="IsProjectPublished" class="select-point" type="checkbox" name="project.IsPublished" value="true" />
+            }
         }
         <label class="middle-text font-family-2 black-text" for="IsProjectPublished">&#10084; Опубликовать проект</label>
     </div>
